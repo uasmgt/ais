@@ -34,6 +34,8 @@ CreateTable <- function(x)
   x <- x[-c(1), ] # удаляет строки без данных
 }
 
+# Создание массива -----------------------------------------------------
 aiso.register <- CreateDataset("./")
 
-#write.xlsx(dataset, file = "dataset.xlsx")
+# Сохранение файла в формате xlsx --------------------------------------
+# write.xlsx(dataset, file = "dataset.xlsx")
