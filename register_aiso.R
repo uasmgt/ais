@@ -38,4 +38,4 @@ CreateTable <- function(x)
 aiso.register <- CreateDataset("./")
 
 # Сохранение файла в формате xlsx --------------------------------------
-# write.xlsx(dataset, file = "dataset.xlsx")
+# write.xlsx(aiso.register, file = "aiso_register.xlsx")
