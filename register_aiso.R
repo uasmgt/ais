@@ -105,8 +105,10 @@ attr(aiso.register$birthdate_mother, "label") <- "Мать: дата рожде�
 attr(aiso.register$name_father, "label") <- "Отец: ФИО"
 attr(aiso.register$birthdate_father, "label") <- "Отец: дата рождения"
 
-# Сохранение массива для анализа в R -----------------------------------
-save(aiso.register, file = "aiso_register.rda")
+# Сохранение результатов -----------------------------------------------
+# (расскомментировать соответствующие строки)
+# Сохранение массива для анализа в R
+# save(aiso.register, file = "aiso_register.rda")
 
-# Сохранение файла в формате xlsx --------------------------------------
-# write.xlsx(aiso.register, file = "aiso_register.xlsx")
+# Сохранение массива в формате csv для работы в MS Excel / LO Calc
+# write.csv2(aiso.register, file = "aiso_register.csv", row.names = FALSE)
