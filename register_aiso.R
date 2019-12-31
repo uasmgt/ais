@@ -37,5 +37,23 @@ CreateTable <- function(x)
 # Создание массива -----------------------------------------------------
 aiso.register <- CreateDataset("./")
 
+# Присвоение названий столбцов
+colnames(aiso.register) <- c("app_no", "app_no_portal", "voucher_no",
+                             "date_time", "status", "denial_reason",
+                             "exec_auth", "office", "list", 
+                             "payment", "purpose", "vacation_spot",
+                             "vacation_address", "period", "theme",
+                             "category", "surname_camper", "name_camper",
+                             "patronym_camper", "gender_camper", "birthdate_camper",
+                             "age_camper", "birthplace_camper", "SNILS_camper", 
+                             "ID_camper", "IDser_camper", "IDno_camper",
+                             "IDissuedate_camper", "IDissueplace_camper", "disorder_cat",
+                             "disorder_sub", "benefit", "reg_address", 
+                             "ticket_to_rejection", "ticket_from_rejection", "surname_applicant",
+                             "name_applicant", "patronym_applicant", "ID_applicant",
+                             "IDser_applicant", "IDno_applicant", "phone",
+                             "email", "name_mother", "birthdate_mother",
+                             "name_father", "birthdate_father")
+
 # Сохранение файла в формате xlsx --------------------------------------
 # write.xlsx(aiso.register, file = "aiso_register.xlsx")
