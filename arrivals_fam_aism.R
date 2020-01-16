@@ -101,32 +101,16 @@ CreateRow <- function(x){
     commercials.nonarrived + department.nonarrived
   
   # запись в строку
-  row <- cbind(portal.arrived, 
-               nrow(portal.kids), 
-               diasbled.kids,
-               orphan.kids, 
-               needy.kids, 
-               nrow(portal.adults),
-               portal.nonarrived, 
-               portal.nonarrived.kids,
-               portal.nonarrived.adults, 
-               youth.arrived, 
-               youth.nonarrived,
-               commercials.arrived, 
-               commercials.kids, 
-               commercials.adults,
-               commercials.nonarrived,
-               commercials.nonarrived.kids, 
-               commercials.nonarrived.adults,
-               department.arrived, 
-               department.kids, 
-               department.youth, 
-               department.tutors,
-               department.nonarrived,
-               department.nonarrived.kids, 
-               department.nonarrived.youth, 
-               department.nonarrived.tutors,
-               arrived.total,
+  row <- cbind(portal.arrived, nrow(portal.kids), diasbled.kids,
+               orphan.kids, needy.kids, nrow(portal.adults),
+               portal.nonarrived, portal.nonarrived.kids, portal.nonarrived.adults, 
+               youth.arrived, youth.nonarrived, commercials.arrived, 
+               commercials.kids, commercials.adults, commercials.nonarrived,
+               commercials.nonarrived.kids, commercials.nonarrived.adults,
+               department.arrived, department.kids, department.youth, 
+               department.tutors, department.nonarrived, 
+               department.nonarrived.kids, department.nonarrived.youth, 
+               department.nonarrived.tutors, arrived.total,
                nonarrived.total)
   return(row)
 }
@@ -182,9 +166,8 @@ list.fam <- lapply(files.fam, Exceler)
 dataset.fam <- lapply(list.fam, CreateRow)
 dataset.fam <- data.frame(matrix(unlist(dataset.fam), nrow=length(dataset.fam), byrow=TRUE))
 
-colnames(dataset.fam) <- c("family_visits",
-                           "kids_visits", "disabled", "orphans", 
-                           "needy", "parents_visits", "family_non",
+colnames(dataset.fam) <- c("family_visits", "kids_visits", "disabled", 
+                           "orphans", "needy", "parents_visits", "family_non",
                            "kids_non", "parents_non", "youth_visits",
                            "youth_non", "add_visits", "add_kids_visits",
                            "add_parents_visits", "add_non", "add_kids_non",
