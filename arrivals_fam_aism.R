@@ -209,6 +209,8 @@ dataset.info <- data.frame(matrix(unlist(info.list),
                                   nrow=length(info.list), byrow=TRUE))
 colnames(dataset.info) <- c("camp_name", "date_in", "date_out")
 
+# Create pre-final dataset
+data.fam <- cbind(dataset.info, dataset.fam)
 
 # Geography ----
 setwd("../")
