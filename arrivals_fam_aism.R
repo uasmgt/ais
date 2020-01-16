@@ -136,6 +136,45 @@ CreateRow <- function(x){
   return(row)
 }
 
+GetSessionInfo <- function(x){
+  x <- read.xlsx(x, sheet = 1)
+  camp <- x[1, 2]
+  if (ncol(x) == 23 | ncol(x) == 24){ # проверка размерности
+    term <- as.character(x[1, 21])    # период отдыха
+    term <- unlist(strsplit(term, split = " - ")) # разбивка периода отдыха на даты заезда и выезда
+    date.in  <- term[1]                           # дата заезда
+    date.out <- term[2]                           # дата выезда
+    info <- cbind(camp, date.in, date.out)  # запись переменных в строку
+  } else if (ncol(x) == 16 | ncol(x) == 17 | ncol(x) == 18 | ncol(x) == 19){      # далее см. комментарии выше
+    term <- as.character(x[1, 14])
+    term <- unlist(strsplit(term, split = " - "))
+    date.in  <- term[1]
+    date.out <- term[2]
+    info <- cbind(camp, date.in, date.out)
+  } else if (ncol(x) == 30){      # далее см. комментарии выше
+    term <- as.character(x[1, 26])
+    term <- unlist(strsplit(term, split = " - "))
+    date.in  <- term[1]
+    date.out <- term[2]
+    info <- cbind(camp, date.in, date.out)
+  } else if (ncol(x) == 10){      # далее см. комментарии выше
+    term <- as.character(x[1, 9])
+    term <- unlist(strsplit(term, split = " - "))
+    date.in  <- term[1]
+    date.out <- term[2]
+    info <- cbind(camp, date.in, date.out)
+  }  else if (ncol(x) == 11){      # далее см. комментарии выше
+    term <- as.character(x[1, 8])
+    term <- unlist(strsplit(term, split = " - "))
+    date.in  <- term[1]
+    date.out <- term[2]
+    info <- cbind(camp, date.in, date.out)
+  } else {
+    info <- cbind(NA, NA, NA)
+  }
+  return(info) # возврат массива
+}
+
 Exceler <- function(x){
   file <- read_xlsx(x, sheet = 3)
 }
