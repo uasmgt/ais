@@ -49,7 +49,7 @@ aiso.needy <- aiso.register %>%
 denials.data <- read.csv2("denials.csv", encoding = "UTF-8")
 
 # Дополнительные данные (расположение и адрес лагерей) -----------------
-camps <- read.csv2("geography.csv", encoding = "UTF-8")
+load("~/aism/camps.rda")
 
 # Функции --------------------------------------------------------------
 # Обработка сведений о заезде ------------------------------------------
@@ -205,10 +205,10 @@ data.ind$date_out <- as.Date(data.ind$date_out, format = "%d.%m.%Y")
 
 # Добавление информации о расположении лагерей -------------------------
 setwd("..")
-data.ind$zone <- camps$zone[match(data.ind$camp_name, camps$camp_name)]
+# data.ind$zone <- camps$zone[match(data.ind$camp_name, camps$camp_name)]
 data.ind$region <- camps$region[match(data.ind$camp_name, camps$camp_name)]
-data.ind$address <- camps$address[match(data.ind$camp_name, camps$camp_name)]
-data.ind <- data.ind %>% drop_na(camp_name)
+# data.ind$address <- camps$address[match(data.ind$camp_name, camps$camp_name)]
+# data.ind <- data.ind %>% drop_na(camp_name)
 
 # Сохранение результатов -----------------------------------------------
 # (расскомментировать соответствующие строки)
