@@ -187,47 +187,28 @@ list.fam <- lapply(files.fam, Exceler)
 dataset.fam <- lapply(list.fam, CreateRow)
 dataset.fam <- data.frame(matrix(unlist(dataset.fam), nrow=length(dataset.fam), byrow=TRUE))
 
-colnames(dataset.fam) <- c("camp_name",
-                           "date_in",
-                           "family_visits",
-                           "kids_visits", 
-                           "disabled", 
-                           "orphans", 
-                           "needy",
-                           "parents_visits",
-                           "family_non",
-                           "kids_non",
-                           "parents_non",
-                           "youth_visits",
-                           "youth_non",
-                           "add_visits",
-                           "add_kids_visits",
-                           "add_parents_visits",
-                           "add_non",
-                           "add_kids_non",
-                           "add_parents_non",
-                           "dep_visits",
-                           "dep_orphans_u7_visits",
-                           "dep_orphans_o18_visits",
-                           "dep_educators_visits",
-                           "dep_non",
-                           "dep_orphans_u7_non",
-                           "dep_orphans_o18_non",
-                           "dep_educators_non",
-                           "visits_total",
-                           "non_total")
+colnames(dataset.fam) <- c("camp_name", "date_in", "family_visits",
+                           "kids_visits", "disabled", "orphans", 
+                           "needy", "parents_visits", "family_non",
+                           "kids_non", "parents_non", "youth_visits",
+                           "youth_non", "add_visits", "add_kids_visits",
+                           "add_parents_visits", "add_non", "add_kids_non",
+                           "add_parents_non", "dep_visits", "dep_orphans_u7_visits",
+                           "dep_orphans_o18_visits", "dep_educators_visits",
+                           "dep_non", "dep_orphans_u7_non", "dep_orphans_o18_non",
+                           "dep_educators_non", "visits_total", "non_total")
 
 
 convert.cols <- c(3:29)
 dataset.fam[ , convert.cols] <- apply(dataset.fam[ , convert.cols], 2,
                     function(x) as.numeric(as.character(x)))
-dataset.fam$date_in <- as.Date(dataset.fam$date_in, 
-                                     format = "%d.%m.%Y")
 
 # Add turnout date
 info.list <- lapply(files.fam, GetSessionInfo)
 dataset.info <- data.frame(matrix(unlist(info.list), 
                                   nrow=length(info.list), byrow=TRUE))
+colnames(dataset.info) <- c("camp_name", "date_in", "date_out")
+
 
 # Geography ----
 setwd("../")
