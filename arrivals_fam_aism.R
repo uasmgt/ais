@@ -48,13 +48,10 @@ load("~/aism/camps.rda")
 
 # Функции --------------------------------------------------------------
 CreateRow <- function(x){
-  # информация о заезде 
-  arrival.date <- as.character(colnames(x)[2]) # дата заезда
-  camp.name <- as.character(x[1, 2])           # название лагеря
-  names(x) <- as.character(unlist(x[5, ]))     # название колонок
-  x <- x[-c(1:5), ]                            # удаление пустых рядов
+  names(x) <- as.character(unlist(x[4, ]))     # название колонок
+  x <- x[-c(1:4), ]                            # удаление пустых рядов
   x <- x[c(1, 2, 5, 6, 9, 10, 23)]             # удаление ненужных колонок
-  x$`Возраст` <- as.numeric(x$`Возраст`)       # ковертация возраста в числовую переменную
+  x$`Возраст` <- as.numeric(x$`Возраст`)       # ЗАЧЕМ НАМ ВОЗРАСТ?!
   # разбиение массива на подмассивы
   #  commercials <- x %>% filter(`Цель обращения` == "Дополнительные места и услуги для совместного отдыха")
   commercials <- subset(x, grepl("[A-Z]{3}", `Номер заявления`))
@@ -104,9 +101,7 @@ CreateRow <- function(x){
     commercials.nonarrived + department.nonarrived
   
   # запись в строку
-  row <- cbind(camp.name,
-               arrival.date,
-               portal.arrived, 
+  row <- cbind(portal.arrived, 
                nrow(portal.kids), 
                diasbled.kids,
                orphan.kids, 
@@ -187,7 +182,7 @@ list.fam <- lapply(files.fam, Exceler)
 dataset.fam <- lapply(list.fam, CreateRow)
 dataset.fam <- data.frame(matrix(unlist(dataset.fam), nrow=length(dataset.fam), byrow=TRUE))
 
-colnames(dataset.fam) <- c("camp_name", "date_in", "family_visits",
+colnames(dataset.fam) <- c("family_visits",
                            "kids_visits", "disabled", "orphans", 
                            "needy", "parents_visits", "family_non",
                            "kids_non", "parents_non", "youth_visits",
@@ -199,7 +194,7 @@ colnames(dataset.fam) <- c("camp_name", "date_in", "family_visits",
                            "dep_educators_non", "visits_total", "non_total")
 
 
-convert.cols <- c(3:29)
+convert.cols <- c(1:27)
 dataset.fam[ , convert.cols] <- apply(dataset.fam[ , convert.cols], 2,
                     function(x) as.numeric(as.character(x)))
 
