@@ -176,7 +176,7 @@ GetSessionInfo <- function(x){
 }
 
 Exceler <- function(x){
-  file <- read_xlsx(x, sheet = 3)
+  file <- read.xlsx(x, sheet = 3)
 }
 
 # Create dataset ----
