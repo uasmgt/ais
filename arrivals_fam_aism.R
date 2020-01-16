@@ -225,19 +225,9 @@ dataset.fam$date_in <- as.Date(dataset.fam$date_in,
                                      format = "%d.%m.%Y")
 
 # Add turnout date
-GetSessionInfo <- function(x){
-  x <- read.xlsx(x)
-  camp <-  x[1, 2]
-  term <-  as.character(x[1, 14])
-  term <- unlist(strsplit(term, split = " - "))
-  date.in  <- term[1]
-  date.out <- term[2]
-  string <- cbind(camp, date.in, date.out)
-  return(string)
-}
-sessions.fam <- lapply(files.fam, GetSessionInfo)
-dataset.sessions <- data.frame(matrix(unlist(sessions.fam), 
-                                      nrow = length(sessions.fam), byrow=TRUE))
+info.list <- lapply(files.fam, GetSessionInfo)
+dataset.info <- data.frame(matrix(unlist(info.list), 
+                                  nrow=length(info.list), byrow=TRUE))
 
 # Geography ----
 setwd("../")
