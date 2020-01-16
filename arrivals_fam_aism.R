@@ -14,6 +14,7 @@
 
 # Необходимые пакеты ---------------------------------------------------
 library(openxlsx)
+library(readxl)
 library(dplyr)
 library(tidyr)
 
@@ -38,9 +39,12 @@ aiso.orphans <- aiso.register %>%
 aiso.needy <- aiso.register %>% 
   filter(benefit ==
            "Дети из малообеспеченных семей")
+aiso.youth <- aiso.register %>% filter(purpose == 
+                                         "Молодёжный отдых / Молодёжный отдых для лиц из числа детей-сирот и детей, оставшихся без попечения родителей, 18-23 лет")
+
 
 # Дополнительные данные (расположение и адрес лагерей) -----------------
-camps <- read.csv2("geography.csv", encoding = "UTF-8")
+load("~/aism/camps.rda")
 
 # Функции --------------------------------------------------------------
 CreateRow <- function(x){
@@ -84,14 +88,14 @@ CreateRow <- function(x){
   portal.nonarrived.kids <- nrow(portal %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"))
   portal.nonarrived.adults <- nrow(portal %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Сопровождающий"))
   
-  diasbled.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% register.disabled$id, ])
-  orphan.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% register.orphans$id, ])
-  needy.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% register.needy$id, ])
+  diasbled.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% aiso.disabled$id, ])
+  orphan.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% aiso.orphans$id, ])
+  needy.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% aiso.needy$id, ])
   
   youth.nonarrived <- youth %>% filter(`Заехал` == "Не заехал")
   youth.arrived <- youth %>% filter(`Заехал` == "Заехал")
-  youth.nonarrived <- nrow(youth.nonarrived[youth.nonarrived$`Номер документа` %in% register.youth$id, ])
-  youth.arrived <- nrow(youth.arrived[youth.arrived$`Номер документа` %in% register.youth$id, ])
+  youth.nonarrived <- nrow(youth.nonarrived[youth.nonarrived$`Номер документа` %in% aiso.youth$id, ])
+  youth.arrived <- nrow(youth.arrived[youth.arrived$`Номер документа` %in% aiso.youth$id, ])
   
   arrived.total <- portal.arrived + youth.arrived + 
     commercials.arrived + department.arrived
@@ -141,47 +145,60 @@ setwd("arrivals_fam/")
 
 files.fam <- list.files(path = "./", recursive = TRUE, pattern = "*.xlsx")
 list.fam <- lapply(files.fam, Exceler)
-
 dataset.fam <- lapply(list.fam, CreateRow)
 dataset.fam <- data.frame(matrix(unlist(dataset.fam), nrow=length(dataset.fam), byrow=TRUE))
-colnames(dataset.fam) <- c("Название лагеря",
-                           "Дата заезда",
-                           "Совместный - факт",
-                           "факт: дети", 
-                           "дети-инвалиды", 
-                           "дети-сироты", 
-                           "дети-малооб.",
-                           "факт: сопровождающие",
-                           "Совместный - недозаезды",
-                           "недозаезды: дети",
-                           "недозаезды: сопр.",
-                           "Молодёжный - заезды",
-                           "Молодёжный - недозаезды",
-                           "Доп. путёвки: факт",
-                           "Доп. путёвки: факт: дети",
-                           "Доп. путёвки: факт: сопр.",
-                           "Доп. путёвки: недозаезды",
-                           "Доп. путёвки: недозаезды: дети",
-                           "Доп. путёвки: недозаезды: сопр",
-                           "ДТСЗН: факт",
-                           "ДТСЗН: сироты 2-7",
-                           "ДТСЗН: сироты 18-23",
-                           "ДТСЗН: воспитатели",
-                           "ДТСЗН: недозаезды",
-                           "ДТСЗН: недозаезды: 2-7",
-                           "ДТСЗН: недозаезды: 18-23",
-                           "ДТСЗН: недозаезды: воспитатели",
-                           "Заезд: всего",
-                           "Недозаезд: всего")
+
+colnames(dataset.fam) <- c("camp_name",
+                           "date_in",
+                           "family_visits",
+                           "kids_visits", 
+                           "disabled", 
+                           "orphans", 
+                           "needy",
+                           "parents_visits",
+                           "family_non",
+                           "kids_non",
+                           "parents_non",
+                           "youth_visits",
+                           "youth_non",
+                           "add_visits",
+                           "add_kids_visits",
+                           "add_parents_visits",
+                           "add_non",
+                           "add_kids_non",
+                           "add_parents_non",
+                           "dep_visits",
+                           "dep_orphans_u7_visits",
+                           "dep_orphans_o18_visits",
+                           "dep_educators_visits",
+                           "dep_non",
+                           "dep_orphans_u7_non",
+                           "dep_orphans_o18_non",
+                           "dep_educators_non",
+                           "visits_total",
+                           "non_total")
 
 
 convert.cols <- c(3:29)
 dataset.fam[ , convert.cols] <- apply(dataset.fam[ , convert.cols], 2,
                     function(x) as.numeric(as.character(x)))
-dataset.fam$`Дата заезда` <- as.Date(dataset.fam$`Дата заезда`, format = "%d.%m.%Y")
+dataset.fam$date_in <- as.Date(dataset.fam$date_in, 
+                                     format = "%d.%m.%Y")
 
 # Add turnout date
-dataset.fam$`Дата выезда` <- dataset.fam$`Дата заезда` + 14
+GetSessionInfo <- function(x){
+  x <- read.xlsx(x)
+  camp <-  x[1, 2]
+  term <-  as.character(x[1, 14])
+  term <- unlist(strsplit(term, split = " - "))
+  date.in  <- term[1]
+  date.out <- term[2]
+  string <- cbind(camp, date.in, date.out)
+  return(string)
+}
+sessions.fam <- lapply(files.fam, GetSessionInfo)
+dataset.sessions <- data.frame(matrix(unlist(sessions.fam), 
+                                      nrow = length(sessions.fam), byrow=TRUE))
 
 # Geography ----
 setwd("../")
