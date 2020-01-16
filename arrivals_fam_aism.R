@@ -14,7 +14,6 @@
 
 # Необходимые пакеты ---------------------------------------------------
 library(openxlsx)
-library(readxl)
 library(dplyr)
 library(tidyr)
 
