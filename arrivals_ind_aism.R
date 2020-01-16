@@ -203,7 +203,7 @@ rm(list = ls(pattern = "(dataset.)|(info.)|(list.)|(files.)"))
 data.ind$date_in <- as.Date(data.ind$date_in, format = "%d.%m.%Y")
 data.ind$date_out <- as.Date(data.ind$date_out, format = "%d.%m.%Y")
 
-# Добавление информации о расположении лагерей
+# Добавление информации о расположении лагерей -------------------------
 setwd("..")
 data.ind$zone <- camps$zone[match(data.ind$camp_name, camps$camp_name)]
 data.ind$region <- camps$region[match(data.ind$camp_name, camps$camp_name)]
