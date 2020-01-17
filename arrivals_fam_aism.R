@@ -189,6 +189,10 @@ colnames(dataset.info) <- c("camp_name", "date_in", "date_out")
 # Create pre-final dataset
 data.fam <- cbind(dataset.info, dataset.fam)
 
+# Обработка дат --------------------------------------------------------
+data.fam$date_in <- as.Date(data.fam$date_in, format = "%d.%m.%Y")
+data.fam$date_out <- as.Date(data.fam$date_out, format = "%d.%m.%Y")
+
 # Добавление информации о расположении лагерей -------------------------
 # data.ind$zone <- camps$zone[match(data.ind$camp_name, camps$camp_name)]
 data.fam$region <- camps$region[match(data.fam$camp_name, camps$camp_name)]
