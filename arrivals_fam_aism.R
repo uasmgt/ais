@@ -135,7 +135,7 @@ GetSessionInfo <- function(x){
     date.in  <- term[1]
     date.out <- term[2]
     info <- cbind(camp, date.in, date.out)
-  } else if (ncol(x) == 10){      # далее см. комментарии выше
+  } else if (ncol(x) == 10 | ncol(x) == 13){
     term <- as.character(x[1, 9])
     term <- unlist(strsplit(term, split = " - "))
     date.in  <- term[1]
