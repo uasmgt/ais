@@ -189,15 +189,9 @@ colnames(dataset.info) <- c("camp_name", "date_in", "date_out")
 # Create pre-final dataset
 data.fam <- cbind(dataset.info, dataset.fam)
 
-# Geography ----
-setwd("../")
-camps <- read_xlsx("geography2.xlsx")
-dataset.fam$`Зона` <- camps$zone[match(dataset.fam$`Название лагеря`, camps$name)]
-dataset.fam$`Регион` <- camps$region[match(dataset.fam$`Название лагеря`, camps$name)]
-dataset.fam$`Адрес` <- camps$address[match(dataset.fam$`Название лагеря`, camps$name)]
-dataset.fam$`Тип учреждения` <- camps$type[match(dataset.fam$`Название лагеря`, camps$name)]
-# Reorder columns in data frame ----
-dataset.fam <- dataset.fam[c(1, 31:33, 2, 30, 3:29)]
-
-write.xlsx(dataset.fam, "xlsxs/data_family2019.xlsx")
+# Добавление информации о расположении лагерей -------------------------
+# data.ind$zone <- camps$zone[match(data.ind$camp_name, camps$camp_name)]
+data.fam$region <- camps$region[match(data.fam$camp_name, camps$camp_name)]
+# data.ind$address <- camps$address[match(data.ind$camp_name, camps$camp_name)]
+# data.ind <- data.ind %>% drop_na(camp_name)
 
