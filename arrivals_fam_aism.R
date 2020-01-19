@@ -206,5 +206,4 @@ data.fam$region <- camps$region[match(data.fam$camp_name, camps$camp_name)]
 # save(data.fam, file = "data_fam.rda")
 
 # Сохранение массива в формате csv для работы в MS Excel / LO Calc
-# write.csv2(data.fam, file = "data_fam.csv", row.names = FALSE,
-#            fileEncoding = "UTF-8")
+# write.csv2(data.fam, file = "data_fam.csv", row.names = FALSE)
