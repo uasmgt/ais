@@ -197,11 +197,39 @@ load("~/aism/2019/data_fam.rda")
 
 data.med.fam$youth <- data.fam$youth_visits
 data.med.fam$adults <- data.fam$parents_visits + data.fam$add_parents_visits
-data.med.fam$department <- data.fam$dep_visits
 data.med.fam$kids <- data.fam$kids_visits + data.fam$add_kids_visits +
   data.fam$dep_visits
+data.med.fam$department <- data.fam$dep_visits
 data.med.fam$disabled <- data.fam$disabled
 data.med.fam$visitors <- data.fam$visits_total
+
+# Атрибуты
+attr(data.med.fam[, 1], "label") <- "Название организации"
+attr(data.med.fam[, 2], "label") <- "Дата заезда"
+attr(data.med.fam[, 3], "label") <- "Дата выезда"
+attr(data.med.fam[, 4], "label") <- "Инфекционные и паразитарные болезни"
+attr(data.med.fam[, 5], "label") <- "Болезни эндокринной системы, нарушения обмена веществ"
+attr(data.med.fam[, 6], "label") <- "Болезни нервной системы"
+attr(data.med.fam[, 7], "label") <- "Болезни глаза"
+attr(data.med.fam[, 8], "label") <- "Оториноларигологические болезни"
+attr(data.med.fam[, 9], "label") <- "Болезни сердечно-сосудистой системы"
+attr(data.med.fam[, 10], "label") <- "Болезни органов дыхания"
+attr(data.med.fam[, 11], "label") <- "Болезни органов пищеварения"
+attr(data.med.fam[, 12], "label") <- "Болезни органов мочеполовой системы"
+attr(data.med.fam[, 13], "label") <- "Отравления"
+attr(data.med.fam[, 14], "label") <- "Тепловые удары"
+attr(data.med.fam[, 15], "label") <- "Экстренные и неотложные состояния"
+attr(data.med.fam[, 16], "label") <- "Болезни кожи неинфекционные"
+attr(data.med.fam[, 17], "label") <- "Всего обращений"
+attr(data.med.fam[, 18], "label") <- "Всего страховых случаев"
+attr(data.med.fam[, 19], "label") <- "Регион"
+attr(data.med.fam[, 20], "label") <- "Отдыхающие: сироты 18-23 (молодёжный отдых)"
+attr(data.med.fam[, 21], "label") <- "Отдыхащие: сопровождающие"
+attr(data.med.fam[, 24], "label") <- "Отдыхающие: дети (всего)"
+attr(data.med.fam[, 22], "label") <- "Отдыхающие: дети-сироты (ДТСЗН)"
+attr(data.med.fam[, 23], "label") <- "Отдыхающие: дети-инвалиды"
+attr(data.med.fam[, 25], "label") <- "Отдыхающие (всего)"
+
 
 # Экспорт массива
 # save(data.med.fam, file = "~/aism/2019/data_medical_fam2019.rda")
