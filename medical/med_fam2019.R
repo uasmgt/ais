@@ -191,3 +191,14 @@ data.med.fam[ , convert.cols] <- apply(data.med.fam[ , convert.cols], 2,
 # Дополнительные данные (расположение и адрес лагерей) -----------------
 load("~/aism/camps.rda")
 data.med.fam$region <- camps$region[match(data.med.fam$camp_name, camps[, 1])]
+
+# Подгрузить данные о количестве отдыхающих
+load("~/aism/2019/data_fam.rda")
+
+data.med.fam$youth <- data.fam$youth_visits
+data.med.fam$adults <- data.fam$parents_visits + data.fam$add_parents_visits
+data.med.fam$department <- data.fam$dep_visits
+data.med.fam$kids <- data.fam$kids_visits + data.fam$add_kids_visits +
+  data.fam$dep_visits
+data.med.fam$disabled <- data.fam$disabled
+data.med.fam$visitors <- data.fam$visits_total
