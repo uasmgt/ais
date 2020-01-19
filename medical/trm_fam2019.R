@@ -116,7 +116,7 @@ data.trm.fam$date_in <- as.Date(data.trm.fam$date_in,
                                 format = "%d.%m.%Y")
 data.trm.fam$date_out <- as.Date(data.trm.fam$date_out, 
                                  format = "%d.%m.%Y")
-convert.cols <- c(4:18)
+convert.cols <- c(4:10)
 data.trm.fam[ , convert.cols] <- apply(data.trm.fam[ , convert.cols], 2,
                                        function(x) as.numeric(as.character(x)))
 
