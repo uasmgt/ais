@@ -184,6 +184,7 @@ setwd("..")
 data.ind$region <- camps$region[match(data.ind$camp_name, camps$camp_name)]
 # data.ind$address <- camps$address[match(data.ind$camp_name, camps$camp_name)]
 # data.ind <- data.ind %>% drop_na(camp_name)
+data.ind <- unique(data.ind)
 
 # Сохранение результатов -----------------------------------------------
 # (расскомментировать соответствующие строки)
