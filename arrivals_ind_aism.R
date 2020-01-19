@@ -59,49 +59,24 @@ SheetsSession <- function(x){
 }
 # Чтение данных о заезде из файла
 GetSessionInfo <- function(x){
-  if (ncol(x) == 23 | ncol(x) == 24){ # проверка размерности
-    camp <- x[1, 2]                   # название лагеря
-    sess <- x[1, 14]                  # номер смены
-    term <- as.character(x[1, 21])    # период отдыха
-    term <- unlist(strsplit(term, split = " - ")) # разбивка периода отдыха на даты заезда и выезда
-    date.in  <- term[1]                           # дата заезда
-    date.out <- term[2]                           # дата выезда
-    info <- cbind(camp, sess, date.in, date.out)  # запись переменных в строку
-  } else if (ncol(x) == 14){          # далее см. комментарии выше
-    camp <- x[1, 2]
-    sess <- x[1, 6]
-    term <- as.character(x[1, 8])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    info <- cbind(camp, sess, date.in, date.out)
-  } else if (ncol(x) == 18){
-    camp <- x[1, 2]
+  camp <- x[1, 2] # название лагеря
+  if (ncol(x) == 23 | ncol(x) == 24){
+    sess <- x[1, 14]
+    term <- as.character(x[1, 21])
+  } else if (ncol(x) >= 16){
     sess <- x[1, 10]
     term <- as.character(x[1, 14])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    info <- cbind(camp, sess, date.in, date.out)
-  } else if (ncol(x) == 9){
-    camp <- x[1, 2]
-    sess <- x[1, 6]
-    term <- as.character(x[1, 14])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    info <- cbind(camp, sess, date.in, date.out)
-  } else if (ncol(x) == 12){
-    camp <- x[1, 2]
+  } else if (ncol(x) <= 14){
     sess <- x[1, 6]
     term <- as.character(x[1, 8])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    info <- cbind(camp, sess, date.in, date.out)
   } else {
-    info <- cbind(NA, NA, NA, NA)
+    sess <- NA
+    term <- " - "
   }
+  term <- unlist(strsplit(term, split = " - ")) # разбивка периода отдыха на даты заезда и выезда
+  date.in  <- term[1]                           # дата заезда
+  date.out <- term[2]                           # дата выезда
+  info <- cbind(camp, sess, date.in, date.out)
   return(info) # возврат массива
 }
 
