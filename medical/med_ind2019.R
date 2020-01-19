@@ -5,160 +5,41 @@ library(dplyr)
 
 # Функции --------------------------------------------------------------
 GetMedicalInd <- function(x){
-  camp <-  x[1, 2]
-  session <- x[1, 14]
-  term <-  as.character(x[1, 20])
-  term <- unlist(strsplit(term, split = " - "))
-  date.in  <- term[1]
-  date.out <- term[2]
-  if (ncol(x) == 23) {
-    bol01 <- x[15, 23]
-    bol02 <- x[16, 23]
-    bol03 <- x[17, 23]
-    bol04 <- x[18, 23]
-    bol05 <- x[19, 23]
-    bol06 <- x[20, 23]
-    bol07 <- x[21, 23]
-    bol08 <- x[22, 23]
-    bol09 <- x[23, 23]
-    bol10 <- x[24, 23]
-    bol11 <- x[25, 23]
-    bol12 <- x[26, 23]
-    bol13 <- x[27, 23]
-    bol.total <- x[28, 23]
-    ins.total <- x[29, 23]
-    string <- cbind(camp, date.in, date.out, bol01, bol02, bol03, bol04, 
-                    bol05, bol06, bol07, bol08, bol09, bol10, bol11, 
-                    bol12, bol13, bol.total, ins.total)
-  } else if (ncol(x) == 16) {
-    bol01 <- x[15, 16]
-    bol02 <- x[16, 16]
-    bol03 <- x[17, 16]
-    bol04 <- x[18, 16]
-    bol05 <- x[19, 16]
-    bol06 <- x[20, 16]
-    bol07 <- x[21, 16]
-    bol08 <- x[22, 16]
-    bol09 <- x[23, 16]
-    bol10 <- x[24, 16]
-    bol11 <- x[25, 16]
-    bol12 <- x[26, 16]
-    bol13 <- x[27, 16]
-    bol.total <- x[28, 16]
-    ins.total <- x[29, 16]
-    string <- cbind(camp, date.in, date.out, bol01, bol02, bol03, bol04, 
-                    bol05, bol06, bol07, bol08, bol09, bol10, bol11, 
-                    bol12, bol13, bol.total, ins.total)
-  } else if (ncol(x) == 18) {
-    bol01 <- x[15, 18]
-    bol02 <- x[16, 18]
-    bol03 <- x[17, 18]
-    bol04 <- x[18, 18]
-    bol05 <- x[19, 18]
-    bol06 <- x[20, 18]
-    bol07 <- x[21, 18]
-    bol08 <- x[22, 18]
-    bol09 <- x[23, 18]
-    bol10 <- x[24, 18]
-    bol11 <- x[25, 18]
-    bol12 <- x[26, 18]
-    bol13 <- x[27, 18]
-    bol.total <- x[28, 18]
-    ins.total <- x[29, 18]
-    string <- cbind(camp, date.in, date.out, bol01, bol02, bol03, bol04, 
-                    bol05, bol06, bol07, bol08, bol09, bol10, bol11, 
-                    bol12, bol13, bol.total, ins.total)
-  } else if (ncol(x) == 19) {
-    bol01 <- x[15, 19]
-    bol02 <- x[16, 19]
-    bol03 <- x[17, 19]
-    bol04 <- x[18, 19]
-    bol05 <- x[19, 19]
-    bol06 <- x[20, 19]
-    bol07 <- x[21, 19]
-    bol08 <- x[22, 19]
-    bol09 <- x[23, 19]
-    bol10 <- x[24, 19]
-    bol11 <- x[25, 19]
-    bol12 <- x[26, 19]
-    bol13 <- x[27, 19]
-    bol.total <- x[28, 19]
-    ins.total <- x[29, 19]
-    string <- cbind(camp, date.in, date.out, bol01, bol02, bol03, bol04, 
-                    bol05, bol06, bol07, bol08, bol09, bol10, bol11, 
-                    bol12, bol13, bol.total, ins.total)
-  } else if (ncol(x) == 23) {
-    term <-  as.character(x[1, 20])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    bol01 <- x[15, 23]
-    bol02 <- x[16, 23]
-    bol03 <- x[17, 23]
-    bol04 <- x[18, 23]
-    bol05 <- x[19, 23]
-    bol06 <- x[20, 23]
-    bol07 <- x[21, 23]
-    bol08 <- x[22, 23]
-    bol09 <- x[23, 23]
-    bol10 <- x[24, 23]
-    bol11 <- x[25, 23]
-    bol12 <- x[26, 23]
-    bol13 <- x[27, 23]
-    bol.total <- x[28, 23]
-    ins.total <- x[29, 23]
-    string <- cbind(camp, date.in, date.out, bol01, bol02, bol03, bol04, 
-                    bol05, bol06, bol07, bol08, bol09, bol10, bol11, 
-                    bol12, bol13, bol.total, ins.total)
-  } else if (ncol(x) == 30) {
-    term <-  as.character(x[1, 26])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    bol01 <- x[15, 30]
-    bol02 <- x[16, 30]
-    bol03 <- x[17, 30]
-    bol04 <- x[18, 30]
-    bol05 <- x[19, 30]
-    bol06 <- x[20, 30]
-    bol07 <- x[21, 30]
-    bol08 <- x[22, 30]
-    bol09 <- x[23, 30]
-    bol10 <- x[24, 30]
-    bol11 <- x[25, 30]
-    bol12 <- x[26, 30]
-    bol13 <- x[27, 30]
-    bol.total <- x[28, 30]
-    ins.total <- x[29, 30]
-    string <- cbind(camp, date.in, date.out, bol01, bol02, bol03, bol04, 
-                    bol05, bol06, bol07, bol08, bol09, bol10, bol11, 
-                    bol12, bol13, bol.total, ins.total)
-  } else if (ncol(x) == 13) {
-    term <-  as.character(x[1, 11])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    bol01 <- x[15, 13]
-    bol02 <- x[16, 13]
-    bol03 <- x[17, 13]
-    bol04 <- x[18, 13]
-    bol05 <- x[19, 13]
-    bol06 <- x[20, 13]
-    bol07 <- x[21, 13]
-    bol08 <- x[22, 13]
-    bol09 <- x[23, 13]
-    bol10 <- x[24, 13]
-    bol11 <- x[25, 13]
-    bol12 <- x[26, 13]
-    bol13 <- x[27, 13]
-    bol.total <- x[28, 13]
-    ins.total <- x[29, 13]
-    string <- cbind(camp, date.in, date.out, bol01, bol02, bol03, bol04, 
-                    bol05, bol06, bol07, bol08, bol09, bol10, bol11, 
-                    bol12, bol13, bol.total, ins.total)
+  camp <- x[1, 2] # название лагеря
+  if (ncol(x) == 23 | ncol(x) == 24){
+    sess <- x[1, 14]
+    term <- as.character(x[1, 21])
+  } else if (ncol(x) >= 16){
+    sess <- x[1, 10]
+    term <- as.character(x[1, 14])
+  } else if (ncol(x) <= 14){
+    sess <- x[1, 6]
+    term <- as.character(x[1, 8])
   } else {
-    string <- cbind(rep(NA, 18))
+    sess <- NA
+    term <- " - "
   }
+  term <- unlist(strsplit(term, split = " - ")) # разбивка периода отдыха на даты заезда и выезда
+  date.in  <- term[1]                           # дата заезда
+  date.out <- term[2]                           # дата выезда
+  bol01 <- x[15, ncol(x)]
+  bol02 <- x[16, ncol(x)]
+  bol03 <- x[17, ncol(x)]
+  bol04 <- x[18, ncol(x)]
+  bol05 <- x[19, ncol(x)]
+  bol06 <- x[20, ncol(x)]
+  bol07 <- x[21, ncol(x)]
+  bol08 <- x[22, ncol(x)]
+  bol09 <- x[23, ncol(x)]
+  bol10 <- x[24, ncol(x)]
+  bol11 <- x[25, ncol(x)]
+  bol12 <- x[26, ncol(x)]
+  bol13 <- x[27, ncol(x)]
+  bol.total <- x[28, ncol(x)]
+  ins.total <- x[29, ncol(x)]
+  string <- cbind(camp, date.in, date.out, bol01, bol02, bol03, bol04, 
+                  bol05, bol06, bol07, bol08, bol09, bol10, bol11, 
+                  bol12, bol13, bol.total, ins.total)
   return(string)
 }
 
@@ -169,66 +50,64 @@ disorders <- c("infections_infestations", "endocrine", "nervous",
                "heat_apoplexy", "acute", "tetter")
 
 # Сборка массива -------------------------------------------------------
-files.fam <- list.files(path = "./", recursive = TRUE, 
+files.ind <- list.files(path = "./", recursive = TRUE, 
                         pattern = "*.xlsx")
-list.fam <- lapply(files.fam, read.xlsx)
-medical.fam <- lapply(list.fam, GetMedicalFam)
-data.med.fam <- data.frame(matrix(unlist(medical.fam), 
-                                  nrow=length(medical.fam), byrow=TRUE))
+list.ind <- lapply(files.ind, read.xlsx)
+medical.ind <- lapply(list.ind, GetMedicalInd)
+data.med.ind <- data.frame(matrix(unlist(medical.ind), 
+                                  nrow=length(medical.ind), byrow=TRUE))
 # data.med.fam <- na.omit(data.med.fam)
-colnames(data.med.fam) <- c("camp_name", "date_in", "date_out",
+colnames(data.med.ind) <- c("camp_name", "date_in", "date_out",
                             disorders, "total", "ins_cases")
-data.med.fam$date_in <- as.Date(data.med.fam$date_in, 
+data.med.ind$date_in <- as.Date(data.med.ind$date_in, 
                                 format = "%d.%m.%Y")
-data.med.fam$date_out <- as.Date(data.med.fam$date_out, 
+data.med.ind$date_out <- as.Date(data.med.ind$date_out, 
                                  format = "%d.%m.%Y")
 convert.cols <- c(4:18)
-data.med.fam[ , convert.cols] <- apply(data.med.fam[ , convert.cols], 2,
+data.med.ind[ , convert.cols] <- apply(data.med.ind[ , convert.cols], 2,
                                        function(x) as.numeric(as.character(x)))
 
 # Добавление информации о расположении лагерей -------------------------
 # Дополнительные данные (расположение и адрес лагерей) -----------------
 load("~/aism/camps.rda")
-data.med.fam$region <- camps$region[match(data.med.fam$camp_name, camps[, 1])]
+data.med.ind$region <- camps$region[match(data.med.ind$camp_name, camps[, 1])]
+
+# Удаление дубликатов
+data.med.ind <- unique(data.med.ind)
 
 # Подгрузить данные о количестве отдыхающих
-load("~/aism/2019/data_fam.rda")
+load("~/aism/2019/data_ind.rda")
 
-data.med.fam$youth <- data.fam$youth_visits
-data.med.fam$adults <- data.fam$parents_visits + data.fam$add_parents_visits
-data.med.fam$kids <- data.fam$kids_visits + data.fam$add_kids_visits +
-  data.fam$dep_visits
-data.med.fam$department <- data.fam$dep_visits
-data.med.fam$disabled <- data.fam$disabled
-data.med.fam$visitors <- data.fam$visits_total
+data.med.ind$kids <- data.ind$fact_total
+data.med.ind$kids_vouchers <- data.ind$fact_vouchers
+data.med.ind$kids_dep <- data.ind$fact_dep
+data.med.ind$disabled <- data.ind$disabled
 
 # Атрибуты
-attr(data.med.fam[, 1], "label") <- "Название организации"
-attr(data.med.fam[, 2], "label") <- "Дата заезда"
-attr(data.med.fam[, 3], "label") <- "Дата выезда"
-attr(data.med.fam[, 4], "label") <- "Инфекционные и паразитарные болезни"
-attr(data.med.fam[, 5], "label") <- "Болезни эндокринной системы, нарушения обмена веществ"
-attr(data.med.fam[, 6], "label") <- "Болезни нервной системы"
-attr(data.med.fam[, 7], "label") <- "Болезни глаза"
-attr(data.med.fam[, 8], "label") <- "Оториноларигологические болезни"
-attr(data.med.fam[, 9], "label") <- "Болезни сердечно-сосудистой системы"
-attr(data.med.fam[, 10], "label") <- "Болезни органов дыхания"
-attr(data.med.fam[, 11], "label") <- "Болезни органов пищеварения"
-attr(data.med.fam[, 12], "label") <- "Болезни органов мочеполовой системы"
-attr(data.med.fam[, 13], "label") <- "Отравления"
-attr(data.med.fam[, 14], "label") <- "Тепловые удары"
-attr(data.med.fam[, 15], "label") <- "Экстренные и неотложные состояния"
-attr(data.med.fam[, 16], "label") <- "Болезни кожи неинфекционные"
-attr(data.med.fam[, 17], "label") <- "Всего обращений"
-attr(data.med.fam[, 18], "label") <- "Всего страховых случаев"
-attr(data.med.fam[, 19], "label") <- "Регион"
-attr(data.med.fam[, 20], "label") <- "Отдыхающие: сироты 18-23 (молодёжный отдых)"
-attr(data.med.fam[, 21], "label") <- "Отдыхащие: сопровождающие"
-attr(data.med.fam[, 24], "label") <- "Отдыхающие: дети (всего)"
-attr(data.med.fam[, 22], "label") <- "Отдыхающие: дети-сироты (ДТСЗН)"
-attr(data.med.fam[, 23], "label") <- "Отдыхающие: дети-инвалиды"
-attr(data.med.fam[, 25], "label") <- "Отдыхающие (всего)"
+attr(data.med.ind[, 1], "label") <- "Название организации"
+attr(data.med.ind[, 2], "label") <- "Дата заезда"
+attr(data.med.ind[, 3], "label") <- "Дата выезда"
+attr(data.med.ind[, 4], "label") <- "Инфекционные и паразитарные болезни"
+attr(data.med.ind[, 5], "label") <- "Болезни эндокринной системы, нарушения обмена веществ"
+attr(data.med.ind[, 6], "label") <- "Болезни нервной системы"
+attr(data.med.ind[, 7], "label") <- "Болезни глаза"
+attr(data.med.ind[, 8], "label") <- "Оториноларигологические болезни"
+attr(data.med.ind[, 9], "label") <- "Болезни сердечно-сосудистой системы"
+attr(data.med.ind[, 10], "label") <- "Болезни органов дыхания"
+attr(data.med.ind[, 11], "label") <- "Болезни органов пищеварения"
+attr(data.med.ind[, 12], "label") <- "Болезни органов мочеполовой системы"
+attr(data.med.ind[, 13], "label") <- "Отравления"
+attr(data.med.ind[, 14], "label") <- "Тепловые удары"
+attr(data.med.ind[, 15], "label") <- "Экстренные и неотложные состояния"
+attr(data.med.ind[, 16], "label") <- "Болезни кожи неинфекционные"
+attr(data.med.ind[, 17], "label") <- "Всего обращений"
+attr(data.med.ind[, 18], "label") <- "Всего страховых случаев"
+attr(data.med.ind[, 19], "label") <- "Регион"
+attr(data.med.ind[, 20], "label") <- "Количество отдыхающих"
+attr(data.med.ind[, 21], "label") <- "Отдыхащие: по путёвкам"
+attr(data.med.ind[, 22], "label") <- "Отдыхающие: по спискам ДТСЗН"
+attr(data.med.ind[, 23], "label") <- "Отдыхающие: инвалиды (по путёвкам)"
 
 
 # Экспорт массива
-# save(data.med.fam, file = "~/aism/2019/data_medical_fam2019.rda")
+# save(data.med.ind, file = "~/aism/2019/data_medical_ind2019.rda")
