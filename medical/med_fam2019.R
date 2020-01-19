@@ -202,3 +202,6 @@ data.med.fam$kids <- data.fam$kids_visits + data.fam$add_kids_visits +
   data.fam$dep_visits
 data.med.fam$disabled <- data.fam$disabled
 data.med.fam$visitors <- data.fam$visits_total
+
+# Экспорт массива
+# save(data.med.fam, file = "~/aism/2019/data_medical_fam2019.rda")
