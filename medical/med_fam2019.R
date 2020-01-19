@@ -225,9 +225,9 @@ attr(data.med.fam[, 18], "label") <- "Всего страховых случае
 attr(data.med.fam[, 19], "label") <- "Регион"
 attr(data.med.fam[, 20], "label") <- "Отдыхающие: сироты 18-23 (молодёжный отдых)"
 attr(data.med.fam[, 21], "label") <- "Отдыхащие: сопровождающие"
-attr(data.med.fam[, 24], "label") <- "Отдыхающие: дети (всего)"
-attr(data.med.fam[, 22], "label") <- "Отдыхающие: дети-сироты (ДТСЗН)"
-attr(data.med.fam[, 23], "label") <- "Отдыхающие: дети-инвалиды"
+attr(data.med.fam[, 22], "label") <- "Отдыхающие: дети (всего)"
+attr(data.med.fam[, 23], "label") <- "Отдыхающие: дети-сироты (ДТСЗН)"
+attr(data.med.fam[, 24], "label") <- "Отдыхающие: дети-инвалиды"
 attr(data.med.fam[, 25], "label") <- "Отдыхающие (всего)"
 
 
