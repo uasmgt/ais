@@ -156,4 +156,4 @@ attr(data.trm.fam[, 16], "label") <- "Отдыхающие: дети-инвал�
 attr(data.trm.fam[, 17], "label") <- "Отдыхающие (всего)"
 
 # Экспорт массива
-# save(data.trm.fam, file = "~/aism/2019/data_traumas_fam2019.rda")
+# save(data.trm.fam, file = "~/aism/2019/data_trm_fam2019.rda")
