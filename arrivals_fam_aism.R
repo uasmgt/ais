@@ -187,6 +187,9 @@ data.fam$region <- camps$region[match(data.fam$camp_name, camps$camp_name)]
 # Пересохранение в переменную с указанием года и удаление дубликатов
 unique(data.fam) -> fam2019
 
+# Удаление вспомогательных переменных
+rm(list = ls(pattern = "(dataset.)|(info.)|(list.)|(files.)|
+             (aiso.)|(camps)|(data.)|(convert.)"))
 
 # Сохранение результатов -----------------------------------------------
 # (расскомментировать соответствующие строки)
