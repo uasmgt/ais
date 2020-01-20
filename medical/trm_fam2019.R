@@ -77,7 +77,8 @@ data.trm.fam$visitors <- fam2019$visits_total
 
 # Расчёт количества обращений на одного отдыхающего
 data.trm.fam$per_men <- round(data.trm.fam$total / data.trm.fam$visitors, 2)
-data.trm.fam[is.na(data.trm.fam$per_men), ]$per_men <- 0.00
+data.trm.fam[is.nan(data.trm.fam$per_men), ]$per_men <- 0.00
+data.trm.fam[is.infinite(data.trm.fam$per_men), ]$per_men <- 0.00
 
 # Атрибуты
 attr(data.trm.fam$camp_name, "label") <- "Название организации"
