@@ -74,6 +74,9 @@ data.med.fam$department <- data.fam$dep_visits
 data.med.fam$disabled <- data.fam$disabled
 data.med.fam$visitors <- data.fam$visits_total
 
+# Расчёт количества обращений на одного отдыхающего
+data.med.fam$per_man <- round(data.med.fam$total / data.med.fam$visitors)
+
 # Атрибуты
 attr(data.med.fam[, 1], "label") <- "Название организации"
 attr(data.med.fam[, 2], "label") <- "Дата заезда"
