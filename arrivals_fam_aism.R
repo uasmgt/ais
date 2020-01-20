@@ -189,8 +189,7 @@ data.fam -> fam2019
 # fam2019 <- unique(fam2019)
 
 # Удаление вспомогательных переменных
-rm(list = ls(pattern = "(dataset.)|(info.)|(list.)|(files.)|
-             (aiso.)|(camps)|(data.)|(convert.)"))
+rm(list = ls(pattern = "(dataset.)|(info.)|(list.)|(files.)|(aiso.)|(camps)|(data.)|(convert.)"))
 
 # Сохранение результатов -----------------------------------------------
 # (расскомментировать соответствующие строки)
