@@ -63,6 +63,10 @@ data.trm.fam$department <- fam2019$dep_visits
 data.trm.fam$disabled <- fam2019$disabled
 data.trm.fam$visitors <- fam2019$visits_total
 
+# Расчёт количества обращений на одного отдыхающего
+data.trm.fam$per_men <- round(data.trm.fam$total / data.trm.fam$visitors, 2)
+data.trm.fam[is.na(data.trm.fam$per_men), ]$per_men <- 0
+
 # Атрибуты
 attr(data.trm.fam[, 1], "label") <- "Название организации"
 attr(data.trm.fam[, 2], "label") <- "Дата заезда"
