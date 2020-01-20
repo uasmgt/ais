@@ -58,40 +58,45 @@ data.trm.ind[ , convert.cols] <- apply(data.trm.ind[ , convert.cols], 2,
 
 # Добавление информации о расположении лагерей -------------------------
 # Дополнительные данные (расположение и адрес лагерей) -----------------
-load("~/aism/camps.rda")
+load("~/data/camps.rda")
 data.trm.ind$region <- camps$region[match(data.trm.ind$camp_name, camps[, 1])]
 
 # Удаление дубликатов
 data.trm.ind <- unique(data.trm.ind)
 
 # Подгрузить данные о количестве отдыхающих
-load("~/aism/2019/data_ind.rda")
+load("~/data/data_ind_2019.rda")
 
-data.trm.ind$kids <- data.ind$fact_total
-data.trm.ind$kids_vouchers <- data.ind$fact_vouchers
-data.trm.ind$kids_dep <- data.ind$fact_dep
-data.trm.ind$disabled <- data.ind$disabled
+data.trm.ind$kids <- ind2019$fact_total
+data.trm.ind$kids_vouchers <- ind2019$fact_vouchers
+data.trm.ind$kids_dep <- ind2019$fact_dep
+data.trm.ind$disabled <- ind2019$disabled
 
 convert.cols <- c(4:10, 12:15)
 data.trm.ind[ , convert.cols] <- apply(data.trm.ind[ , convert.cols], 2,
                                        function(x) as.numeric(as.character(x)))
 
+data.trm.ind$per_men <- round(data.trm.ind$total / data.trm.ind$kids, 2)
+data.trm.ind[is.nan(data.trm.ind$per_men), ]$per_men <- 0.00
+data.trm.ind[is.infinite(data.trm.ind$per_men), ]$per_men <- 0.00
+
 # Атрибуты
-attr(data.trm.fam[, 1], "label") <- "Название организации"
-attr(data.trm.fam[, 2], "label") <- "Дата заезда"
-attr(data.trm.fam[, 3], "label") <- "Дата выезда"
-attr(data.trm.fam[, 4], "label") <- "Переломы"
-attr(data.trm.fam[, 5], "label") <- "Черепно-мозговые травмы"
-attr(data.trm.fam[, 6], "label") <- "Вывихи, растяжения"
-attr(data.trm.fam[, 7], "label") <- "Термические и химические ожоги"
-attr(data.trm.fam[, 8], "label") <- "Прочие (царапины, порезы, ушибы)"
-attr(data.trm.fam[, 9], "label") <- "Всего обращений"
-attr(data.trm.fam[, 10], "label") <- "Всего страховых случаев"
-attr(data.trm.fam[, 11], "label") <- "Регион"
-attr(data.trm.ind[, 12], "label") <- "Количество отдыхающих"
-attr(data.trm.ind[, 13], "label") <- "Отдыхащие: по путёвкам"
-attr(data.trm.ind[, 14], "label") <- "Отдыхающие: по спискам ДТСЗН"
-attr(data.trm.ind[, 15], "label") <- "Отдыхающие: инвалиды (по путёвкам)"
+attr(data.trm.ind$camp_name, "label") <- "Название организации"
+attr(data.trm.ind$date_in, "label") <- "Дата заезда"
+attr(data.trm.ind$date_out, "label") <- "Дата выезда"
+attr(data.trm.ind$fracture, "label") <- "Переломы"
+attr(data.trm.ind$brain_damage, "label") <- "Черепно-мозговые травмы"
+attr(data.trm.ind$dislocation_distortion, "label") <- "Вывихи, растяжения"
+attr(data.trm.ind$ambustion, "label") <- "Термические и химические ожоги"
+attr(data.trm.ind$other, "label") <- "Прочие (царапины, порезы, ушибы)"
+attr(data.trm.ind$total, "label") <- "Всего обращений"
+attr(data.trm.ind$ins_cases, "label") <- "Всего страховых случаев"
+attr(data.trm.ind$region, "label") <- "Регион"
+attr(data.trm.ind$kids, "label") <- "Количество отдыхающих"
+attr(data.trm.ind$kids_vouchers, "label") <- "Отдыхащие: по путёвкам"
+attr(data.trm.ind$kids_dep, "label") <- "Отдыхающие: по спискам ДТСЗН"
+attr(data.trm.ind$disabled, "label") <- "Отдыхающие: инвалиды (по путёвкам)"
+attr(data.trm.ind$per_men, "label") <- "Кол-во обращений на одного отдыхающего"
 
 # Экспорт массива
-# save(data.trm.ind, file = "~/aism/2019/data_trm_ind2019.rda")
+# save(data.trm.ind, file = "~/data/data_trm_ind2019.rda")
