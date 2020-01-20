@@ -105,6 +105,8 @@ attr(data.med.fam$department, "label") <- "Отдыхающие: дети-сир
 attr(data.med.fam$disabled, "label") <- "Отдыхающие: дети-инвалиды"
 attr(data.med.fam$visitors, "label") <- "Отдыхающие (всего)"
 
+# Пересохранить переменную с указанием года
+data.med.fam -> med.fam2019
 
 # Экспорт массива
-# save(data.med.fam, file = "~/aism/2019/data_medical_fam2019.rda")
+# save(med.fam2019, file = "~/aism/2019/data_medical_fam2019.rda")
