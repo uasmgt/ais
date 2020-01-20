@@ -31,7 +31,7 @@ GetMedicalFam <- function(x){
   return(string)
 }
 
-# Названия заболеваний и травм -----------------------------------------
+# Названия заболеваний  ------------------------------------------------
 disorders <- c("infections_infestations", "endocrine", "nervous",
                "ocular", "otorhinolaryngology", "heart", "respiratory",
                "digestive", "urogenital", "intoxication", 
