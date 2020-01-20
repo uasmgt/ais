@@ -199,14 +199,14 @@ data.fam$region <- camps$region[match(data.fam$camp_name, camps$camp_name)]
 # data.ind$address <- camps$address[match(data.ind$camp_name, camps$camp_name)]
 # data.ind <- data.ind %>% drop_na(camp_name)
 
-# Пересохранение в переменную с указанием года
-data.fam -> fam2019
+# Пересохранение в переменную с указанием года и удаление дубликатов
+unique(data.fam) -> fam2019
+
 
 # Сохранение результатов -----------------------------------------------
 # (расскомментировать соответствующие строки)
-# setwd("..")
 # Сохранение массива для анализа в R
-# save(data.fam, file = "data_fam.rda")
+# save(fam2019, file = "~/aism/2019/data_fam.rda")
 
 # Сохранение массива в формате csv для работы в MS Excel / LO Calc
-# write.csv2(data.fam, file = "data_fam.csv", row.names = FALSE)
+# write.csv2(fam2019, file = "~/aism/2019/data_fam.csv", row.names = FALSE)
