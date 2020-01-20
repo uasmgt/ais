@@ -67,7 +67,7 @@ data.med.fam <- unique(data.med.fam)
 load("~/aism/2019/data_fam.rda")
 
 data.med.fam$youth <- fam2019$youth_visits
-data.med.fam$adults <- fam2019$parents_visits + data.fam$add_parents_visits
+data.med.fam$adults <- fam2019$parents_visits + fam2019$add_parents_visits
 data.med.fam$kids <- fam2019$kids_visits + fam2019$add_kids_visits +
   fam2019$dep_visits
 data.med.fam$department <- fam2019$dep_visits
@@ -79,31 +79,31 @@ data.med.fam$per_men <- round(data.med.fam$total / data.med.fam$visitors, 2)
 data.med.fam[is.na(data.med.fam$per_men), ]$per_men <- 0
 
 # Атрибуты
-attr(data.med.fam[, 1], "label") <- "Название организации"
-attr(data.med.fam[, 2], "label") <- "Дата заезда"
-attr(data.med.fam[, 3], "label") <- "Дата выезда"
-attr(data.med.fam[, 4], "label") <- "Инфекционные и паразитарные болезни"
-attr(data.med.fam[, 5], "label") <- "Болезни эндокринной системы, нарушения обмена веществ"
-attr(data.med.fam[, 6], "label") <- "Болезни нервной системы"
-attr(data.med.fam[, 7], "label") <- "Болезни глаза"
-attr(data.med.fam[, 8], "label") <- "Оториноларигологические болезни"
-attr(data.med.fam[, 9], "label") <- "Болезни сердечно-сосудистой системы"
-attr(data.med.fam[, 10], "label") <- "Болезни органов дыхания"
-attr(data.med.fam[, 11], "label") <- "Болезни органов пищеварения"
-attr(data.med.fam[, 12], "label") <- "Болезни органов мочеполовой системы"
-attr(data.med.fam[, 13], "label") <- "Отравления"
-attr(data.med.fam[, 14], "label") <- "Тепловые удары"
-attr(data.med.fam[, 15], "label") <- "Экстренные и неотложные состояния"
-attr(data.med.fam[, 16], "label") <- "Болезни кожи неинфекционные"
-attr(data.med.fam[, 17], "label") <- "Всего обращений"
-attr(data.med.fam[, 18], "label") <- "Всего страховых случаев"
-attr(data.med.fam[, 19], "label") <- "Регион"
-attr(data.med.fam[, 20], "label") <- "Отдыхающие: сироты 18-23 (молодёжный отдых)"
-attr(data.med.fam[, 21], "label") <- "Отдыхащие: сопровождающие"
-attr(data.med.fam[, 22], "label") <- "Отдыхающие: дети (всего)"
-attr(data.med.fam[, 23], "label") <- "Отдыхающие: дети-сироты (ДТСЗН)"
-attr(data.med.fam[, 24], "label") <- "Отдыхающие: дети-инвалиды"
-attr(data.med.fam[, 25], "label") <- "Отдыхающие (всего)"
+attr(data.med.fam$camp_name, "label") <- "Название организации"
+attr(data.med.fam$date_in, "label") <- "Дата заезда"
+attr(data.med.fam$date_out, "label") <- "Дата выезда"
+attr(data.med.fam$infections_infestations, "label") <- "Инфекционные и паразитарные болезни"
+attr(data.med.fam$endocrine, "label") <- "Болезни эндокринной системы, нарушения обмена веществ"
+attr(data.med.fam$nervous, "label") <- "Болезни нервной системы"
+attr(data.med.fam$ocular, "label") <- "Болезни глаза"
+attr(data.med.fam$otorhinolaryngology, "label") <- "Оториноларигологические болезни"
+attr(data.med.fam$heart, "label") <- "Болезни сердечно-сосудистой системы"
+attr(data.med.fam$respiratory, "label") <- "Болезни органов дыхания"
+attr(data.med.fam$digestive, "label") <- "Болезни органов пищеварения"
+attr(data.med.fam$urogenital, "label") <- "Болезни органов мочеполовой системы"
+attr(data.med.fam$intoxication, "label") <- "Отравления"
+attr(data.med.fam$heat_apoplexy, "label") <- "Тепловые удары"
+attr(data.med.fam$acute, "label") <- "Экстренные и неотложные состояния"
+attr(data.med.fam$tetter, "label") <- "Болезни кожи неинфекционные"
+attr(data.med.fam$total, "label") <- "Всего обращений"
+attr(data.med.fam$ins_cases, "label") <- "Всего страховых случаев"
+attr(data.med.fam$region, "label") <- "Регион"
+attr(data.med.fam$youth, "label") <- "Отдыхающие: сироты 18-23 (молодёжный отдых)"
+attr(data.med.fam$adults, "label") <- "Отдыхащие: сопровождающие"
+attr(data.med.fam$kids, "label") <- "Отдыхающие: дети (всего)"
+attr(data.med.fam$department, "label") <- "Отдыхающие: дети-сироты (ДТСЗН)"
+attr(data.med.fam$disabled, "label") <- "Отдыхающие: дети-инвалиды"
+attr(data.med.fam$visitors, "label") <- "Отдыхающие (всего)"
 
 
 # Экспорт массива
