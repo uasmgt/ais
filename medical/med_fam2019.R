@@ -119,4 +119,4 @@ attr(data.med.fam$per_men, "label") <- "Кол-во обращений на од
 data.med.fam -> med.fam2019
 
 # Экспорт массива
-# save(med.fam2019, file = "~/aism/2019/data_medical_fam2019.rda")
+# save(med.fam2019, file = "~/data/data_medical_fam2019.rda")
