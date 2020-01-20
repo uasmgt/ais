@@ -24,6 +24,7 @@ setwd("~/aism/2019")
 # В случае необходимости обработать выгрузку из АИС "Отдых" скриптом
 # register_aiso.R (https://github.com/uasmgt/ais/blob/master/register_aiso.R).
 aiso.register <- get(load("~/data/aiso_vouchers_2019.rda"))
+rm(vouchers.aiso.2019)
 # Объединение серии и номера документа отдыхающего в одну переменную
 aiso.register$id <- paste(aiso.register$IDser_camper,
                           aiso.register$IDno_camper)
