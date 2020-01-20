@@ -191,7 +191,7 @@ unique(data.fam) -> fam2019
 # Сохранение результатов -----------------------------------------------
 # (расскомментировать соответствующие строки)
 # Сохранение массива для анализа в R
-# save(fam2019, file = "~/aism/2019/data_fam.rda")
+# save(fam2019, file = "~/data/data_fam_2019.rda")
 
 # Сохранение массива в формате csv для работы в MS Excel / LO Calc
-# write.csv2(fam2019, file = "~/aism/2019/data_fam.csv", row.names = FALSE)
+# write.csv2(fam2019, file = "~/data/data_fam_2019.csv", row.names = FALSE)
