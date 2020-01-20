@@ -5,11 +5,23 @@ library(dplyr)
 
 # Функции --------------------------------------------------------------
 GetMedicalFam <- function(x){
-  camp <-  x[1, 2]
-  term <-  as.character(x[1, 14])
-  term <- unlist(strsplit(term, split = " - "))
-  date.in  <- term[1]
-  date.out <- term[2]
+  camp <- x[1, 2]
+  if (ncol(x) == 23 | ncol(x) == 24){ # проверка размерности
+    term <- as.character(x[1, 21])    # период отдыха
+  } else if (ncol(x) == 16 | ncol(x) == 17 | ncol(x) == 18 | ncol(x) == 19){      # далее см. комментарии выше
+    term <- as.character(x[1, 14])
+  } else if (ncol(x) == 30){      # далее см. комментарии выше
+    term <- as.character(x[1, 26])
+  } else if (ncol(x) == 10 | ncol(x) == 13){
+    term <- as.character(x[1, 9])
+  }  else if (ncol(x) == 11){      # далее см. комментарии выше
+    term <- as.character(x[1, 8])
+  } else {
+    term <- " - "
+  }
+  term <- unlist(strsplit(term, split = " - ")) # разбивка периода отдыха на даты заезда и выезда
+  date.in  <- term[1]                           # дата заезда
+  date.out <- term[2]                           # дата выезда
   bol01 <- x[15, ncol(x)]
   bol02 <- x[16, ncol(x)]
   bol03 <- x[17, ncol(x)]
@@ -44,7 +56,6 @@ list.fam <- lapply(files.fam, read.xlsx)
 medical.fam <- lapply(list.fam, GetMedicalFam)
 data.med.fam <- data.frame(matrix(unlist(medical.fam), 
                                   nrow=length(medical.fam), byrow=TRUE))
-# data.med.fam <- na.omit(data.med.fam)
 colnames(data.med.fam) <- c("camp_name", "date_in", "date_out",
                             disorders, "total", "ins_cases")
 data.med.fam$date_in <- as.Date(data.med.fam$date_in, 
@@ -57,7 +68,7 @@ data.med.fam[ , convert.cols] <- apply(data.med.fam[ , convert.cols], 2,
 
 # Добавление информации о расположении лагерей -------------------------
 # Дополнительные данные (расположение и адрес лагерей) -----------------
-load("~/aism/camps.rda")
+load("~/data/camps.rda")
 data.med.fam$region <- camps$region[match(data.med.fam$camp_name, camps[, 1])]
 
 data.med.fam <- unique(data.med.fam)
