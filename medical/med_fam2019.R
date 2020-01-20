@@ -74,7 +74,7 @@ data.med.fam$visitors <- fam2019$visits_total
 
 # Расчёт количества обращений на одного отдыхающего
 data.med.fam$per_men <- round(data.med.fam$total / data.med.fam$visitors, 2)
-data.med.fam[is.na(data.med.fam$per_men), ]$per_men <- 0
+data.med.fam[is.na(data.med.fam$per_men), ]$per_men <- 0.00
 
 # Атрибуты
 attr(data.med.fam$camp_name, "label") <- "Название организации"
