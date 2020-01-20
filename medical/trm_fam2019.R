@@ -5,8 +5,20 @@ library(dplyr)
 
 # Функции --------------------------------------------------------------
 GetTraumasFam <- function(x){
-  camp <-  x[1, 2]
-  term <-  as.character(x[1, 14])
+  camp <- x[1, 2]
+  if (ncol(x) == 23 | ncol(x) == 24){ # проверка размерности
+    term <- as.character(x[1, 21])    # период отдыха
+  } else if (ncol(x) == 16 | ncol(x) == 17 | ncol(x) == 18 | ncol(x) == 19){      # далее см. комментарии выше
+    term <- as.character(x[1, 14])
+  } else if (ncol(x) == 30){      # далее см. комментарии выше
+    term <- as.character(x[1, 26])
+  } else if (ncol(x) == 10 | ncol(x) == 13){
+    term <- as.character(x[1, 9])
+  }  else if (ncol(x) == 11){      # далее см. комментарии выше
+    term <- as.character(x[1, 8])
+  } else {
+    term <- " - "
+  }
   term <- unlist(strsplit(term, split = " - "))
   date.in  <- term[1]
   date.out <- term[2]
