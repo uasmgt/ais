@@ -65,7 +65,7 @@ data.trm.fam$region <- camps$region[match(data.trm.fam$camp_name, camps[, 1])]
 data.trm.fam <- unique(data.trm.fam)
 
 # Подгрузить данные о количестве отдыхающих
-load("~/aism/2019/data_fam.rda")
+load("~/data/data_fam_2019.rda")
 
 data.trm.fam$youth <- fam2019$youth_visits
 data.trm.fam$adults <- fam2019$parents_visits + fam2019$add_parents_visits
@@ -103,4 +103,4 @@ attr(data.trm.fam$per_men, "label") <- "Кол-во обращений на од
 data.med.fam -> trm.fam2019
 
 # Экспорт массива
-# save(trm.fam2019, file = "~/aism/2019/data_trm_fam2019.rda")
+# save(trm.fam2019, file = "~/data/data_trm_fam2019.rda")
