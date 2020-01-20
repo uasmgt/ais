@@ -55,13 +55,13 @@ data.trm.fam <- unique(data.trm.fam)
 # Подгрузить данные о количестве отдыхающих
 load("~/aism/2019/data_fam.rda")
 
-data.trm.fam$youth <- data.fam$youth_visits
-data.trm.fam$adults <- data.fam$parents_visits + data.fam$add_parents_visits
-data.trm.fam$kids <- data.fam$kids_visits + data.fam$add_kids_visits +
-  data.fam$dep_visits
-data.trm.fam$department <- data.fam$dep_visits
-data.trm.fam$disabled <- data.fam$disabled
-data.trm.fam$visitors <- data.fam$visits_total
+data.trm.fam$youth <- fam2019$youth_visits
+data.trm.fam$adults <- fam2019$parents_visits + fam2019$add_parents_visits
+data.trm.fam$kids <- fam2019$kids_visits + fam2019$add_kids_visits +
+  fam2019$dep_visits
+data.trm.fam$department <- fam2019$dep_visits
+data.trm.fam$disabled <- fam2019$disabled
+data.trm.fam$visitors <- fam2019$visits_total
 
 # Атрибуты
 attr(data.trm.fam[, 1], "label") <- "Название организации"
