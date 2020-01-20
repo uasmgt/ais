@@ -62,6 +62,7 @@ data.med.fam[ , convert.cols] <- apply(data.med.fam[ , convert.cols], 2,
 load("~/aism/camps.rda")
 data.med.fam$region <- camps$region[match(data.med.fam$camp_name, camps[, 1])]
 
+date.med.fam <- unique(data.med.fam)
 # Подгрузить данные о количестве отдыхающих
 load("~/aism/2019/data_fam.rda")
 
