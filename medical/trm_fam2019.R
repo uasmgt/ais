@@ -100,7 +100,7 @@ attr(data.trm.fam$total, "label") <- "Отдыхающие (всего)"
 attr(data.trm.fam$per_men, "label") <- "Кол-во обращений на одного отдыхающего"
 
 # Пересохранить переменную с указанием года
-data.med.fam -> trm.fam2019
+data.trm.fam -> trm.fam2019
 
 # Экспорт массива
 # save(trm.fam2019, file = "~/data/data_trm_fam2019.rda")
