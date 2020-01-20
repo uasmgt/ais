@@ -62,7 +62,7 @@ data.med.fam[ , convert.cols] <- apply(data.med.fam[ , convert.cols], 2,
 load("~/aism/camps.rda")
 data.med.fam$region <- camps$region[match(data.med.fam$camp_name, camps[, 1])]
 
-date.med.fam <- unique(data.med.fam)
+data.med.fam <- unique(data.med.fam)
 # Подгрузить данные о количестве отдыхающих
 load("~/aism/2019/data_fam.rda")
 
@@ -75,7 +75,7 @@ data.med.fam$disabled <- data.fam$disabled
 data.med.fam$visitors <- data.fam$visits_total
 
 # Расчёт количества обращений на одного отдыхающего
-data.med.fam$per_man <- round(data.med.fam$total / data.med.fam$visitors)
+data.med.fam$per_men <- round(data.med.fam$total / data.med.fam$visitors)
 
 # Атрибуты
 attr(data.med.fam[, 1], "label") <- "Название организации"
