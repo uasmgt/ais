@@ -44,7 +44,7 @@ aiso.youth <- aiso.register %>% filter(purpose ==
 
 
 # Дополнительные данные (расположение и адрес лагерей) -----------------
-load("~/aism/camps.rda")
+load("~/data/camps.rda")
 
 # Функции --------------------------------------------------------------
 CreateRow <- function(x){
