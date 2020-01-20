@@ -199,6 +199,9 @@ data.fam$region <- camps$region[match(data.fam$camp_name, camps$camp_name)]
 # data.ind$address <- camps$address[match(data.ind$camp_name, camps$camp_name)]
 # data.ind <- data.ind %>% drop_na(camp_name)
 
+# Пересохранение в переменную с указанием года
+data.fam -> fam2019
+
 # Сохранение результатов -----------------------------------------------
 # (расскомментировать соответствующие строки)
 # setwd("..")
