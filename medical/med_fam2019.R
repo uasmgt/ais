@@ -66,13 +66,13 @@ data.med.fam <- unique(data.med.fam)
 # Подгрузить данные о количестве отдыхающих
 load("~/aism/2019/data_fam.rda")
 
-data.med.fam$youth <- data.fam$youth_visits
-data.med.fam$adults <- data.fam$parents_visits + data.fam$add_parents_visits
-data.med.fam$kids <- data.fam$kids_visits + data.fam$add_kids_visits +
-  data.fam$dep_visits
-data.med.fam$department <- data.fam$dep_visits
-data.med.fam$disabled <- data.fam$disabled
-data.med.fam$visitors <- data.fam$visits_total
+data.med.fam$youth <- fam2019$youth_visits
+data.med.fam$adults <- fam2019$parents_visits + data.fam$add_parents_visits
+data.med.fam$kids <- fam2019$kids_visits + fam2019$add_kids_visits +
+  fam2019$dep_visits
+data.med.fam$department <- fam2019$dep_visits
+data.med.fam$disabled <- fam2019$disabled
+data.med.fam$visitors <- fam2019$visits_total
 
 # Расчёт количества обращений на одного отдыхающего
 data.med.fam$per_men <- round(data.med.fam$total / data.med.fam$visitors)
