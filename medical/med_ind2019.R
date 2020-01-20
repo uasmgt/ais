@@ -56,7 +56,6 @@ list.ind <- lapply(files.ind, read.xlsx)
 medical.ind <- lapply(list.ind, GetMedicalInd)
 data.med.ind <- data.frame(matrix(unlist(medical.ind), 
                                   nrow=length(medical.ind), byrow=TRUE))
-# data.med.fam <- na.omit(data.med.fam)
 colnames(data.med.ind) <- c("camp_name", "date_in", "date_out",
                             disorders, "total", "ins_cases")
 data.med.ind$date_in <- as.Date(data.med.ind$date_in, 
@@ -66,47 +65,51 @@ data.med.ind$date_out <- as.Date(data.med.ind$date_out,
 
 # Добавление информации о расположении лагерей -------------------------
 # Дополнительные данные (расположение и адрес лагерей) -----------------
-load("~/aism/camps.rda")
+load("~/data/camps.rda")
 data.med.ind$region <- camps$region[match(data.med.ind$camp_name, camps[, 1])]
 
 # Удаление дубликатов
 data.med.ind <- unique(data.med.ind)
 
 # Подгрузить данные о количестве отдыхающих
-load("~/aism/2019/data_ind.rda")
+load("~/data/data_ind_2019.rda")
 
-data.med.ind$kids <- data.ind$fact_total
-data.med.ind$kids_vouchers <- data.ind$fact_vouchers
-data.med.ind$kids_dep <- data.ind$fact_dep
-data.med.ind$disabled <- data.ind$disabled
+data.med.ind$kids <- ind2019$fact_total
+data.med.ind$kids_vouchers <- ind2019$fact_vouchers
+data.med.ind$kids_dep <- ind2019$fact_dep
+data.med.ind$disabled <- ind2019$disabled
 
 convert.cols <- c(4:18, 20:23)
 data.med.ind[ , convert.cols] <- apply(data.med.ind[ , convert.cols], 2,
                                        function(x) as.numeric(as.character(x)))
+data.med.ind$per_men <- round(data.med.ind$kids / data.med.ind$total, 2)
+data.med.ind[is.nan(data.med.ind$per_men), ]$per_men <- 0.00
+data.med.ind[is.infinite(data.med.ind$per_men), ]$per_men <- 0.00
+
 # Атрибуты
-attr(data.med.ind[, 1], "label") <- "Название организации"
-attr(data.med.ind[, 2], "label") <- "Дата заезда"
-attr(data.med.ind[, 3], "label") <- "Дата выезда"
-attr(data.med.ind[, 4], "label") <- "Инфекционные и паразитарные болезни"
-attr(data.med.ind[, 5], "label") <- "Болезни эндокринной системы, нарушения обмена веществ"
-attr(data.med.ind[, 6], "label") <- "Болезни нервной системы"
-attr(data.med.ind[, 7], "label") <- "Болезни глаза"
-attr(data.med.ind[, 8], "label") <- "Оториноларигологические болезни"
-attr(data.med.ind[, 9], "label") <- "Болезни сердечно-сосудистой системы"
-attr(data.med.ind[, 10], "label") <- "Болезни органов дыхания"
-attr(data.med.ind[, 11], "label") <- "Болезни органов пищеварения"
-attr(data.med.ind[, 12], "label") <- "Болезни органов мочеполовой системы"
-attr(data.med.ind[, 13], "label") <- "Отравления"
-attr(data.med.ind[, 14], "label") <- "Тепловые удары"
-attr(data.med.ind[, 15], "label") <- "Экстренные и неотложные состояния"
-attr(data.med.ind[, 16], "label") <- "Болезни кожи неинфекционные"
-attr(data.med.ind[, 17], "label") <- "Всего обращений"
-attr(data.med.ind[, 18], "label") <- "Всего страховых случаев"
-attr(data.med.ind[, 19], "label") <- "Регион"
-attr(data.med.ind[, 20], "label") <- "Количество отдыхающих"
-attr(data.med.ind[, 21], "label") <- "Отдыхащие: по путёвкам"
-attr(data.med.ind[, 22], "label") <- "Отдыхающие: по спискам ДТСЗН"
-attr(data.med.ind[, 23], "label") <- "Отдыхающие: инвалиды (по путёвкам)"
+attr(data.med.ind$camp_name, "label") <- "Название организации"
+attr(data.med.ind$date_in, "label") <- "Дата заезда"
+attr(data.med.ind$date_out, "label") <- "Дата выезда"
+attr(data.med.ind$infections_infestations, "label") <- "Инфекционные и паразитарные болезни"
+attr(data.med.ind$endocrine, "label") <- "Болезни эндокринной системы, нарушения обмена веществ"
+attr(data.med.ind$nervous, "label") <- "Болезни нервной системы"
+attr(data.med.ind$ocular, "label") <- "Болезни глаза"
+attr(data.med.ind$otorhinolaryngology, "label") <- "Оториноларигологические болезни"
+attr(data.med.ind$heart, "label") <- "Болезни сердечно-сосудистой системы"
+attr(data.med.ind$respiratory, "label") <- "Болезни органов дыхания"
+attr(data.med.ind$digestive, "label") <- "Болезни органов пищеварения"
+attr(data.med.ind$urogenital, "label") <- "Болезни органов мочеполовой системы"
+attr(data.med.ind$intoxication, "label") <- "Отравления"
+attr(data.med.ind$heat_apoplexy, "label") <- "Тепловые удары"
+attr(data.med.ind$acute, "label") <- "Экстренные и неотложные состояния"
+attr(data.med.ind$tetter, "label") <- "Болезни кожи неинфекционные"
+attr(data.med.ind$total, "label") <- "Всего обращений"
+attr(data.med.ind$ins_cases, "label") <- "Всего страховых случаев"
+attr(data.med.ind$region, "label") <- "Регион"
+attr(data.med.ind$kids, "label") <- "Количество отдыхающих (детей)"
+attr(data.med.ind$kids_vouchers, "label") <- "Отдыхащие: по путёвкам"
+attr(data.med.ind$kids_dep, "label") <- "Отдыхающие: по спискам ДТСЗН"
+attr(data.med.ind$disabled, "label") <- "Отдыхающие: инвалиды (по путёвкам)"
 
 # Экспорт массива
 # save(data.med.ind, file = "~/aism/2019/data_medical_ind2019.rda")
