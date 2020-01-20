@@ -80,6 +80,9 @@ data.med.ind$kids_vouchers <- data.ind$fact_vouchers
 data.med.ind$kids_dep <- data.ind$fact_dep
 data.med.ind$disabled <- data.ind$disabled
 
+convert.cols <- c(4:18, 20:23)
+data.med.ind[ , convert.cols] <- apply(data.med.ind[ , convert.cols], 2,
+                                       function(x) as.numeric(as.character(x)))
 # Атрибуты
 attr(data.med.ind[, 1], "label") <- "Название организации"
 attr(data.med.ind[, 2], "label") <- "Дата заезда"
@@ -105,8 +108,5 @@ attr(data.med.ind[, 21], "label") <- "Отдыхащие: по путёвкам"
 attr(data.med.ind[, 22], "label") <- "Отдыхающие: по спискам ДТСЗН"
 attr(data.med.ind[, 23], "label") <- "Отдыхающие: инвалиды (по путёвкам)"
 
-convert.cols <- c(4:18, 20:23)
-data.med.ind[ , convert.cols] <- apply(data.med.ind[ , convert.cols], 2,
-                                       function(x) as.numeric(as.character(x)))
 # Экспорт массива
 # save(data.med.ind, file = "~/aism/2019/data_medical_ind2019.rda")

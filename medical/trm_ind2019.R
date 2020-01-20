@@ -72,6 +72,10 @@ data.trm.ind$kids_vouchers <- data.ind$fact_vouchers
 data.trm.ind$kids_dep <- data.ind$fact_dep
 data.trm.ind$disabled <- data.ind$disabled
 
+convert.cols <- c(4:10, 12:15)
+data.trm.ind[ , convert.cols] <- apply(data.trm.ind[ , convert.cols], 2,
+                                       function(x) as.numeric(as.character(x)))
+
 # Атрибуты
 attr(data.trm.fam[, 1], "label") <- "Название организации"
 attr(data.trm.fam[, 2], "label") <- "Дата заезда"
@@ -88,7 +92,6 @@ attr(data.trm.ind[, 12], "label") <- "Количество отдыхающих"
 attr(data.trm.ind[, 13], "label") <- "Отдыхащие: по путёвкам"
 attr(data.trm.ind[, 14], "label") <- "Отдыхающие: по спискам ДТСЗН"
 attr(data.trm.ind[, 15], "label") <- "Отдыхающие: инвалиды (по путёвкам)"
-
 
 # Экспорт массива
 # save(data.trm.ind, file = "~/aism/2019/data_trm_ind2019.rda")
