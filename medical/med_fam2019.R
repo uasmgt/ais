@@ -102,6 +102,7 @@ attr(data.med.fam$kids, "label") <- "Отдыхающие: дети (всего)
 attr(data.med.fam$department, "label") <- "Отдыхающие: дети-сироты (ДТСЗН)"
 attr(data.med.fam$disabled, "label") <- "Отдыхающие: дети-инвалиды"
 attr(data.med.fam$visitors, "label") <- "Отдыхающие (всего)"
+attr(data.med.fam$per_men, "label") <- "Кол-во обращений на одного отдыхающего"
 
 # Пересохранить переменную с указанием года
 data.med.fam -> med.fam2019
