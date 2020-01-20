@@ -58,7 +58,7 @@ data.trm.fam[ , convert.cols] <- apply(data.trm.fam[ , convert.cols], 2,
 
 # Добавление информации о расположении лагерей -------------------------
 # Дополнительные данные (расположение и адрес лагерей) -----------------
-load("~/aism/camps.rda")
+load("~/data/camps.rda")
 data.trm.fam$region <- camps$region[match(data.trm.fam$camp_name, camps[, 1])]
 
 # Удаление дубликатов
