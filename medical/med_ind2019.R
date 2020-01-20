@@ -82,7 +82,7 @@ data.med.ind$disabled <- ind2019$disabled
 convert.cols <- c(4:18, 20:23)
 data.med.ind[ , convert.cols] <- apply(data.med.ind[ , convert.cols], 2,
                                        function(x) as.numeric(as.character(x)))
-data.med.ind$per_men <- round(data.med.ind$kids / data.med.ind$total, 2)
+data.med.ind$per_men <- round(data.med.ind$total / data.med.ind$kids, 2)
 data.med.ind[is.nan(data.med.ind$per_men), ]$per_men <- 0.00
 data.med.ind[is.infinite(data.med.ind$per_men), ]$per_men <- 0.00
 
@@ -110,6 +110,10 @@ attr(data.med.ind$kids, "label") <- "Количество отдыхающих (
 attr(data.med.ind$kids_vouchers, "label") <- "Отдыхащие: по путёвкам"
 attr(data.med.ind$kids_dep, "label") <- "Отдыхающие: по спискам ДТСЗН"
 attr(data.med.ind$disabled, "label") <- "Отдыхающие: инвалиды (по путёвкам)"
+attr(data.med.ind$per_men, "label") <- "Количество обращений на одного отдыхающего"
+
+# Пересохранить переменную с указанием года
+data.med.ind -> med.ind2019
 
 # Экспорт массива
-# save(data.med.ind, file = "~/aism/2019/data_medical_ind2019.rda")
+# save(med.ind2019, file = "~/data/data_med_ind2019.rda")
