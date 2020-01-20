@@ -10,91 +10,15 @@ GetTraumasFam <- function(x){
   term <- unlist(strsplit(term, split = " - "))
   date.in  <- term[1]
   date.out <- term[2]
-  if (ncol(x) == 17) {
-    trm01 <- x[4, 17]
-    trm02 <- x[5, 17]
-    trm03 <- x[6, 17]
-    trm04 <- x[7, 17]
-    trm05 <- x[8, 17]
-    trm.total <- x[9, 17]
-    ins.trm <- x[10, 17]
-    string <- cbind(camp, date.in, date.out, trm01, trm02, trm03, trm04, 
-                    trm05, trm.total, ins.trm)
-  } else if (ncol(x) == 16) {
-    trm01 <- x[4, 16]
-    trm02 <- x[5, 16]
-    trm03 <- x[6, 16]
-    trm04 <- x[7, 16]
-    trm05 <- x[8, 16]
-    trm.total <- x[9, 16]
-    ins.trm <- x[10, 16]
-    string <- cbind(camp, date.in, date.out, trm01, trm02, trm03, trm04, 
-                    trm05, trm.total, ins.trm)
-  } else if (ncol(x) == 18) {
-    trm01 <- x[4, 18]
-    trm02 <- x[5, 18]
-    trm03 <- x[6, 18]
-    trm04 <- x[7, 18]
-    trm05 <- x[8, 18]
-    trm.total <- x[9, 18]
-    ins.trm <- x[10, 18]
-    string <- cbind(camp, date.in, date.out, trm01, trm02, trm03, trm04, 
-                    trm05, trm.total, ins.trm)
-  } else if (ncol(x) == 19) {
-    trm01 <- x[4, 19]
-    trm02 <- x[5, 19]
-    trm03 <- x[6, 19]
-    trm04 <- x[7, 19]
-    trm05 <- x[8, 19]
-    trm.total <- x[9, 19]
-    ins.trm <- x[10, 19]
-    string <- cbind(camp, date.in, date.out, trm01, trm02, trm03, trm04, 
-                    trm05, trm.total, ins.trm)
-  } else if (ncol(x) == 23) {
-    term <-  as.character(x[1, 20])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    trm01 <- x[4, 23]
-    trm02 <- x[5, 23]
-    trm03 <- x[6, 23]
-    trm04 <- x[7, 23]
-    trm05 <- x[8, 23]
-    trm.total <- x[9, 23]
-    ins.trm <- x[10, 23]
-    string <- cbind(camp, date.in, date.out, trm01, trm02, trm03, trm04, 
-                    trm05, trm.total, ins.trm)
-  } else if (ncol(x) == 30) {
-    term <-  as.character(x[1, 26])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    trm01 <- x[4, 30]
-    trm02 <- x[5, 30]
-    trm03 <- x[6, 30]
-    trm04 <- x[7, 30]
-    trm05 <- x[8, 30]
-    trm.total <- x[9, 30]
-    ins.trm <- x[10, 30]
-    string <- cbind(camp, date.in, date.out, trm01, trm02, trm03, trm04, 
-                    trm05, trm.total, ins.trm)
-  } else if (ncol(x) == 13) {
-    term <-  as.character(x[1, 11])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    trm01 <- x[4, 13]
-    trm02 <- x[5, 13]
-    trm03 <- x[6, 13]
-    trm04 <- x[7, 13]
-    trm05 <- x[8, 13]
-    trm.total <- x[9, 13]
-    ins.trm <- x[10, 13]
-    string <- cbind(camp, date.in, date.out, trm01, trm02, trm03, trm04, 
-                    trm05, trm.total, ins.trm)
-  } else {
-    string <- cbind(rep(NA, 18))
-  }
+  trm01 <- x[4, ncol(x)]
+  trm02 <- x[5, ncol(x)]
+  trm03 <- x[6, ncol(x)]
+  trm04 <- x[7, ncol(x)]
+  trm05 <- x[8, ncol(x)]
+  trm.total <- x[9, ncol(x)]
+  ins.trm <- x[10, ncol(x)]
+  string <- cbind(camp, date.in, date.out, trm01, trm02, trm03, trm04, 
+                  trm05, trm.total, ins.trm)
   return(string)
 }
 
@@ -124,6 +48,9 @@ data.trm.fam[ , convert.cols] <- apply(data.trm.fam[ , convert.cols], 2,
 # Дополнительные данные (расположение и адрес лагерей) -----------------
 load("~/aism/camps.rda")
 data.trm.fam$region <- camps$region[match(data.trm.fam$camp_name, camps[, 1])]
+
+# Удаление дубликатов
+data.trm.fam <- unique(data.trm.fam)
 
 # Подгрузить данные о количестве отдыхающих
 load("~/aism/2019/data_fam.rda")
