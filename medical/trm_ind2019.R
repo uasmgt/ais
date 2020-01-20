@@ -98,5 +98,8 @@ attr(data.trm.ind$kids_dep, "label") <- "Отдыхающие: по списка
 attr(data.trm.ind$disabled, "label") <- "Отдыхающие: инвалиды (по путёвкам)"
 attr(data.trm.ind$per_men, "label") <- "Кол-во обращений на одного отдыхающего"
 
+# Пересохранить переменную с указанием года
+data.trm.ind -> trm.ind2019
+
 # Экспорт массива
-# save(data.trm.ind, file = "~/data/data_trm_ind2019.rda")
+# save(trm.ind2019, file = "~/data/data_trm_ind2019.rda")
