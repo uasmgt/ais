@@ -36,8 +36,6 @@ disorders <- c("infections_infestations", "endocrine", "nervous",
                "ocular", "otorhinolaryngology", "heart", "respiratory",
                "digestive", "urogenital", "intoxication", 
                "heat_apoplexy", "acute", "tetter")
-traumas <- c("fracture", "brain_damage", "dislocation_distortion",
-             "ambustion", "other")
 
 # Сборка массива -------------------------------------------------------
 files.fam <- list.files(path = "./", recursive = TRUE, 
