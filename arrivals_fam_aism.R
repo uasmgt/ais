@@ -23,7 +23,7 @@ setwd("~/aism/2019")
 # Дополнительные данные (реестр заявлений) -----------------------------
 # В случае необходимости обработать выгрузку из АИС "Отдых" скриптом
 # register_aiso.R (https://github.com/uasmgt/ais/blob/master/register_aiso.R).
-load("aiso_register.rda")
+aiso.register <- get(load("~/aiso/vouchers/aiso_vouchers_2019.rda"))
 # Объединение серии и номера документа отдыхающего в одну переменную
 aiso.register$id <- paste(aiso.register$IDser_camper,
                           aiso.register$IDno_camper)
@@ -39,7 +39,7 @@ aiso.needy <- aiso.register %>%
   filter(benefit ==
            "Дети из малообеспеченных семей")
 aiso.youth <- aiso.register %>% filter(purpose == 
-                                         "Молодёжный отдых / Молодёжный отдых для лиц из числа детей-сирот и детей, оставшихся без попечения родителей, 18-23 лет")
+                                         "Молодёжный отдых для лиц из числа детей-сирот и детей, оставшихся без попечения родителей, 18-23 лет")
 
 
 # Дополнительные данные (расположение и адрес лагерей) -----------------
@@ -119,37 +119,21 @@ GetSessionInfo <- function(x){
   camp <- x[1, 2]
   if (ncol(x) == 23 | ncol(x) == 24){ # проверка размерности
     term <- as.character(x[1, 21])    # период отдыха
-    term <- unlist(strsplit(term, split = " - ")) # разбивка периода отдыха на даты заезда и выезда
-    date.in  <- term[1]                           # дата заезда
-    date.out <- term[2]                           # дата выезда
-    info <- cbind(camp, date.in, date.out)  # запись переменных в строку
   } else if (ncol(x) == 16 | ncol(x) == 17 | ncol(x) == 18 | ncol(x) == 19){      # далее см. комментарии выше
     term <- as.character(x[1, 14])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    info <- cbind(camp, date.in, date.out)
   } else if (ncol(x) == 30){      # далее см. комментарии выше
     term <- as.character(x[1, 26])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    info <- cbind(camp, date.in, date.out)
   } else if (ncol(x) == 10 | ncol(x) == 13){
     term <- as.character(x[1, 9])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    info <- cbind(camp, date.in, date.out)
   }  else if (ncol(x) == 11){      # далее см. комментарии выше
     term <- as.character(x[1, 8])
-    term <- unlist(strsplit(term, split = " - "))
-    date.in  <- term[1]
-    date.out <- term[2]
-    info <- cbind(camp, date.in, date.out)
   } else {
-    info <- cbind(NA, NA, NA)
+    term <- " - "
   }
+  term <- unlist(strsplit(term, split = " - ")) # разбивка периода отдыха на даты заезда и выезда
+  date.in  <- term[1]                           # дата заезда
+  date.out <- term[2]                           # дата выезда
+  info <- cbind(camp, date.in, date.out)  # запись переменных в строку
   return(info) # возврат массива
 }
 
