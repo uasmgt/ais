@@ -82,11 +82,26 @@ data.med.fam$kids <- fam2019$kids_visits + fam2019$add_kids_visits +
 data.med.fam$department <- fam2019$dep_visits
 data.med.fam$disabled <- fam2019$disabled
 data.med.fam$visitors <- fam2019$visits_total
+data.med.fam$disorders <- fam2019$disorders_total
+data.med.fam$mental <-  fam2019$mental
+data.med.fam$muscle_skeleton <- fam2019$muscle_skeleton
+data.med.fam$dysfunction <- fam2019$dysfunction
+data.med.fam$sensorial <- fam2019$sensorial
 
-# Расчёт количества обращений на одного отдыхающего
+# Удалить заезды без отдыхающих
+data.med.fam <- data.med.fam %>% filter(visitors == 0)
+
+# Рассчитать доли отдыхающих
+data.med.fam$per_department <- data.med.fam$department / data.med.fam$visitors
+data.med.fam$per_disabled <- data.med.fam$disabled / data.med.fam$visitors
+data.med.fam$per_disorders <- data.med.fam$disorders / data.med.fam$visitors
+data.med.fam$per_mental <- data.med.fam$mental / data.med.fam$visitors
+data.med.fam$per_muscle_skeleton <- data.med.fam$muscle_skeleton / data.med.fam$visitors
+data.med.fam$per_dysfunction <- data.med.fam$dysfunction / data.med.fam$visitors
+data.med.fam$per_sensorial <- data.med.fam$sensorial / data.med.fam$visitors
+
+# Рассчитать количество обращений на одного отдыхающего
 data.med.fam$per_men <- round(data.med.fam$total / data.med.fam$visitors, 2)
-data.med.fam[is.nan(data.med.fam$per_men), ]$per_men <- 0.00
-data.med.fam[is.infinite(data.med.fam$per_men), ]$per_men <- 0.00
 
 # Атрибуты
 attr(data.med.fam$camp_name, "label") <- "Название организации"
