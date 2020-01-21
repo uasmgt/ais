@@ -91,14 +91,14 @@ data.med.fam$sensorial <- fam2019$sensorial
 # Удалить заезды без отдыхающих
 data.med.fam <- data.med.fam %>% filter(visitors != 0)
 
-# Рассчитать доли отдыхающих
-data.med.fam$per_department <- round(data.med.fam$department / data.med.fam$visitors, 2)
-data.med.fam$per_disabled <- round(data.med.fam$disabled / data.med.fam$visitors, 2)
-data.med.fam$per_disorders <- round(data.med.fam$disorders / data.med.fam$visitors, 2)
-data.med.fam$per_mental <- round(data.med.fam$mental / data.med.fam$visitors, 2)
-data.med.fam$per_muscle_skeleton <- round(data.med.fam$muscle_skeleton / data.med.fam$visitors, 2)
-data.med.fam$per_dysfunction <- round(data.med.fam$dysfunction / data.med.fam$visitors, 2)
-data.med.fam$per_sensorial <- round(data.med.fam$sensorial / data.med.fam$visitors, 2)
+# Рассчитать доли детей разных категорий (разных нарушений) от числа детей
+data.med.fam$per_department <- round(data.med.fam$department / data.med.fam$kids, 2)
+data.med.fam$per_disabled <- round(data.med.fam$disabled / data.med.fam$kids, 2)
+data.med.fam$per_disorders <- round(data.med.fam$disorders / data.med.fam$kids, 2)
+data.med.fam$per_mental <- round(data.med.fam$mental / data.med.fam$kids, 2)
+data.med.fam$per_muscle_skeleton <- round(data.med.fam$muscle_skeleton / data.med.fam$kids, 2)
+data.med.fam$per_dysfunction <- round(data.med.fam$dysfunction / data.med.fam$kids, 2)
+data.med.fam$per_sensorial <- round(data.med.fam$sensorial / data.med.fam$kids, 2)
 
 # Рассчитать количество обращений на одного отдыхающего
 data.med.fam$per_men <- round(data.med.fam$total / data.med.fam$visitors, 2)
