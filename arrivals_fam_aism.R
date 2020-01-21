@@ -50,7 +50,7 @@ load("~/data/camps.rda")
 CreateRow <- function(x){
   names(x) <- as.character(unlist(x[4, ]))     # название колонок
   x <- x[-c(1:4), ]                            # удаление пустых рядов
-  x <- x[c(1, 2, 5, 6, 9, 10, 23)]             # удаление ненужных колонок
+  x <- x[c(1, 2, 3, 5, 6, 9, 10, 23)]             # удаление ненужных колонок
   x$`Возраст` <- as.numeric(x$`Возраст`)       # ЗАЧЕМ НАМ ВОЗРАСТ?!
   # разбиение массива на подмассивы
   #  commercials <- x %>% filter(`Цель обращения` == "Дополнительные места и услуги для совместного отдыха")
@@ -76,10 +76,16 @@ CreateRow <- function(x){
   department.nonarrived.kids <- nrow(department %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"  & `Возраст` < 8))
   department.nonarrived.youth <- nrow(department %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"  & `Возраст` > 17))
   department.nonarrived.tutors <- nrow(department %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Воспитатель"))
-  
+
   portal.arrived <- nrow(portal %>% filter(`Заехал` == "Заехал"))
   portal.kids <- portal %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Ребёнок")
   portal.adults <- portal %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Сопровождающий")
+  
+  mental <- nrow(x %>% filter(`Вид ограничения` == "Ментальные, психические и неврологические нарушения"))
+  muscle.skeleton <- nrow(x %>% filter(`Вид ограничения` == "Нарушения опорно-двигательного аппарата"))
+  dysfunction <- nrow(x %>% filter(`Вид ограничения` == "Нарушения функций систем организма"))
+  sensorial <- nrow(x %>% filter(`Вид ограничения` == "Сенсорные нарушения"))
+  disorders.total <- nrow(x %>% filter(`Вид ограничения` != "-"))
   
   portal.nonarrived <- nrow(portal %>% filter(`Заехал` == "Не заехал"))
   portal.nonarrived.kids <- nrow(portal %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"))
@@ -111,7 +117,8 @@ CreateRow <- function(x){
                department.tutors, department.nonarrived, 
                department.nonarrived.kids, department.nonarrived.youth, 
                department.nonarrived.tutors, arrived.total,
-               nonarrived.total)
+               mental, muscle.skeleton, dysfunction, sensorial,
+               disorders.total, nonarrived.total)
   return(row)
 }
 
@@ -158,10 +165,11 @@ colnames(dataset.fam) <- c("family_visits", "kids_visits", "disabled",
                            "add_parents_non", "dep_visits", "dep_orphans_u7_visits",
                            "dep_orphans_o18_visits", "dep_educators_visits",
                            "dep_non", "dep_orphans_u7_non", "dep_orphans_o18_non",
-                           "dep_educators_non", "visits_total", "non_total")
+                           "dep_educators_non", "visits_total", 
+                           "mental", "muscle_skeleton", "dysfunction",
+                           "sensorial", "disorders_total", "non_total")
 
-
-convert.cols <- c(1:27)
+convert.cols <- c(1:32)
 dataset.fam[ , convert.cols] <- apply(dataset.fam[ , convert.cols], 2,
                     function(x) as.numeric(as.character(x)))
 
