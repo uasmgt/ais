@@ -123,6 +123,11 @@ attr(data.trm.fam$per_mental, "label") <- "Доля детей с менталь
 attr(data.trm.fam$per_muscle_skeleton, "label") <- "Доля детей с нарушениями опорно-двигательного аппарата"
 attr(data.trm.fam$per_dysfunction, "label") <- "Доля детей с нарушениями функций организма"
 attr(data.trm.fam$per_sensorial, "label") <- "Доля детей с сенсорными нарушениями"
+attr(data.trm.fam$disorders, "label") <- "Кол-во детей с нарушениями"
+attr(data.trm.fam$mental, "label") <- "Кол-во детей с ментальными нарушениями"
+attr(data.trm.fam$muscle_skeleton, "label") <- "Кол-во детей с нарушениями опорно-двигательного аппарата"
+attr(data.trm.fam$dysfunction, "label") <- "Кол-во детей с нарушениями функций организма"
+attr(data.trm.fam$sensorial, "label") <- "Кол-во детей с сенсорными нарушениями"
 
 # Пересохранить переменную с указанием года
 data.trm.fam -> trm.fam2019
