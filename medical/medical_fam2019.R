@@ -94,3 +94,6 @@ medical.data -> medical.fam2019
 save(medical.fam2019, file = "~/data/medical_fam2019.rda")
 write.csv2(medical.fam2019, file = "~/data/medical_fam2019.csv",
            row.names = FALSE)
+
+# Очистка окружения ----------------------------------------------------
+rm(list = setdiff(ls(), "medical.fam2019"))
