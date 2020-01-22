@@ -1,6 +1,7 @@
 # Необходимые пакеты ---------------------------------------------------
 library(openxlsx)
 library(dplyr)
+library(Hmisc)
 
 # Подгрузить функции ---------------------------------------------------
 source("~/git/ais/medical/medical_functions.R")
