@@ -57,9 +57,10 @@ data.trm.fam[ , convert.cols] <- apply(data.trm.fam[ , convert.cols], 2,
                                        function(x) as.numeric(as.character(x)))
 
 # Добавление информации о расположении лагерей -------------------------
-# Дополнительные данные (расположение и адрес лагерей) -----------------
+# Расположение лагерей и продолжительность заезда ----------------------
 load("~/data/camps.rda")
 data.trm.fam$region <- camps$region[match(data.trm.fam$camp_name, camps[, 1])]
+data.trm.fam$duration <- data.trm.fam$date_out - data.trm.fam$date_in + 1
 
 # Удаление дубликатов
 data.trm.fam <- unique(data.trm.fam)
@@ -74,11 +75,26 @@ data.trm.fam$kids <- fam2019$kids_visits + fam2019$add_kids_visits +
 data.trm.fam$department <- fam2019$dep_visits
 data.trm.fam$disabled <- fam2019$disabled
 data.trm.fam$visitors <- fam2019$visits_total
+data.trm.fam$disorders <- fam2019$disorders_total
+data.trm.fam$mental <-  fam2019$mental
+data.trm.fam$muscle_skeleton <- fam2019$muscle_skeleton
+data.trm.fam$dysfunction <- fam2019$dysfunction
+data.trm.fam$sensorial <- fam2019$sensorial
 
-# Расчёт количества обращений на одного отдыхающего
+# Удалить заезды без отдыхающих
+data.trm.fam <- data.trm.fam %>% filter(visitors != 0)
+
+# Рассчитать доли детей разных категорий (разных нарушений) от числа детей
+data.trm.fam$per_department <- round(data.trm.fam$department / data.trm.fam$kids, 2)
+data.trm.fam$per_disabled <- round(data.trm.fam$disabled / data.trm.fam$kids, 2)
+data.trm.fam$per_disorders <- round(data.trm.fam$disorders / data.trm.fam$kids, 2)
+data.trm.fam$per_mental <- round(data.trm.fam$mental / data.trm.fam$kids, 2)
+data.trm.fam$per_muscle_skeleton <- round(data.trm.fam$muscle_skeleton /data.trm.fam$kids, 2)
+data.trm.fam$per_dysfunction <- round(data.trm.fam$dysfunction / data.trm.fam$kids, 2)
+data.trm.fam$per_sensorial <- round(data.trm.fam$sensorial / data.trm.fam$kids, 2)
+
+# Рассчитать количество обращений на одного отдыхающего
 data.trm.fam$per_men <- round(data.trm.fam$total / data.trm.fam$visitors, 2)
-data.trm.fam[is.nan(data.trm.fam$per_men), ]$per_men <- 0.00
-data.trm.fam[is.infinite(data.trm.fam$per_men), ]$per_men <- 0.00
 
 # Атрибуты
 attr(data.trm.fam$camp_name, "label") <- "Название организации"
@@ -92,6 +108,7 @@ attr(data.trm.fam$other, "label") <- "Прочие (царапины, порез
 attr(data.trm.fam$total, "label") <- "Всего обращений"
 attr(data.trm.fam$ins_cases, "label") <- "Всего страховых случаев"
 attr(data.trm.fam$region, "label") <- "Регион"
+attr(data.trm.fam$duration, "label") <- "Продолжительность заезда"
 attr(data.trm.fam$youth, "label") <- "Отдыхающие: сироты 18-23 (молодёжный отдых)"
 attr(data.trm.fam$adults, "label") <- "Отдыхащие: сопровождающие"
 attr(data.trm.fam$kids, "label") <- "Отдыхающие: дети (всего)"
@@ -99,6 +116,13 @@ attr(data.trm.fam$department, "label") <- "Отдыхающие: дети-сир
 attr(data.trm.fam$disabled, "label") <- "Отдыхающие: дети-инвалиды"
 attr(data.trm.fam$total, "label") <- "Отдыхающие (всего)"
 attr(data.trm.fam$per_men, "label") <- "Кол-во обращений на одного отдыхающего"
+attr(data.trm.fam$per_department, "label") <- "Доля детей-сирот (ДТСЗН) от кол-ва детей"
+attr(data.trm.fam$per_disabled, "label") <- "Доля детей детей-инвалидов"
+attr(data.trm.fam$per_disorders, "label") <- "Доля детей с нарушениями"
+attr(data.trm.fam$per_mental, "label") <- "Доля детей с ментальными нарушениями"
+attr(data.trm.fam$per_muscle_skeleton, "label") <- "Доля детей с нарушениями опорно-двигательного аппарата"
+attr(data.trm.fam$per_dysfunction, "label") <- "Доля детей с нарушениями функций организма"
+attr(data.trm.fam$per_sensorial, "label") <- "Доля детей с сенсорными нарушениями"
 
 # Пересохранить переменную с указанием года
 data.trm.fam -> trm.fam2019
