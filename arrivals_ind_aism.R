@@ -203,7 +203,7 @@ unique(data.ind) -> ind2019
 # Сохранение результатов -----------------------------------------------
 # (расскомментировать соответствующие строки)
 # Сохранение массива для анализа в R
-# save(ind2019, file = "~/data/data_ind_2019.rda")
+save(ind2019, file = "~/data/data_ind_2019.rda")
 
 # Сохранение массива в формате csv для работы в MS Excel / LO Calc
-# write.csv2(ind2019, file = "~/data/data_ind_2019.csv", row.names = FALSE)
+write.csv2(ind2019, file = "~/data/data_ind_2019.csv", row.names = FALSE)
