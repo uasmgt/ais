@@ -104,7 +104,7 @@ CreateRow <- function(x){
   # Подготовка xlsx-файла к анализу
   names(x) <- as.character(unlist(x[4, ]))     # чтение заголовков столбцов
   x <- x[-c(1:4), ]                            # удаление пустых строк
-  x <- x[c(1, 2, 5, 7, 8, 10, 11, 12, 13, 27)] # удаление лишних столбцов
+  x <- x[c(1, 2, 3, 5, 7, 8, 10, 11, 12, 13, 27)] # удаление лишних столбцов
   x <- x %>% filter(`Ребёнок/вожатый` == "Ребёнок") # отбор строк со сведениями о детях
   # Создание подмассивов
   arrivals <- x %>% filter(`Заехал` == "Заехал") # отбор заехавших
@@ -128,11 +128,22 @@ CreateRow <- function(x){
   disabled <- nrow(arrivals.por[arrivals.por$`Номер документа` %in% aiso.disabled$id, ]) # инвалиды
   needy <- nrow(arrivals.por[arrivals.por$`Номер документа` %in% aiso.needy$id, ])       # малообеспеченные
   orphans <- nrow(arrivals.por[arrivals.por$`Номер документа` %in% aiso.orphans$id, ])   # сироты
+  # Подсчёт заехавших по нарушениям
+  mental <- nrow(x %>% filter(`Заехал` == "Заехал" & 
+                                `Вид ограничения` == "Ментальные, психические и неврологические нарушения"))
+  muscle.skeleton <- nrow(x %>% filter(`Заехал` == "Заехал" & 
+                                         `Вид ограничения` == "Нарушения опорно-двигательного аппарата"))
+  dysfunction <- nrow(x %>% filter(`Заехал` == "Заехал" & 
+                                     `Вид ограничения` == "Нарушения функций систем организма"))
+  sensorial <- nrow(x %>% filter(`Заехал` == "Заехал" &
+                                   `Вид ограничения` == "Сенсорные нарушения"))
+  disorders.total <- nrow(x %>% filter(`Заехал` == "Заехал" & `Вид ограничения` != "-"))
   # Запись подсчитанных данных в строку
-  row <- cbind(arrivals.por.num, disabled, orphans, needy, 
+  row <- cbind(arrivals.por.num, disabled, orphans, needy,
                non.arrivals.por.num, non.arrivals.by.denial,
                arrivals.dep, non.arrivals.dep,
-               arrivals.sum, non.arrivals.sum)
+               arrivals.sum, mental, muscle.skeleton, dysfunction,
+               sensorial, disorders.total, non.arrivals.sum)
 }
 # Обработка всех xlsx-файлов в папке
 ReadSheets <- function(x){
@@ -157,9 +168,11 @@ files.ind <- list.files(path = "./",
 list.ind <- lapply(files.ind, ReadSheets) # обработка файлов
 dataset.ind <- data.frame(matrix(unlist(list.ind), 
                                  nrow = length(list.ind), byrow = TRUE)) # конвертация листа в таблицу
-colnames(dataset.ind) <- c("fact_vouchers", "disabled", "orphans",
-                           "needy", "nonarrivals_vouchers", "nonarrivals_by_denial",
+colnames(dataset.ind) <- c("fact_vouchers", "disabled", "orphans", "needy",
+                           "nonarrivals_vouchers", "nonarrivals_by_denial",
                            "fact_dep", "nonarrivals_dep", "fact_total",
+                           "mental", "muscle_skeleton", "dysfunction",
+                           "sensorial", "disorders_total", 
                            "nonarrivals_total") # присвоение столбцам заголовков
 list.info <- lapply(files.ind, SheetsSession)
 info.ind <- lapply(list.info, GetSessionInfo)
@@ -179,7 +192,6 @@ data.ind$date_in <- as.Date(data.ind$date_in, format = "%d.%m.%Y")
 data.ind$date_out <- as.Date(data.ind$date_out, format = "%d.%m.%Y")
 
 # Добавление информации о расположении лагерей -------------------------
-setwd("..")
 # data.ind$zone <- camps$zone[match(data.ind$camp_name, camps$camp_name)]
 data.ind$region <- camps$region[match(data.ind$camp_name, camps$camp_name)]
 # data.ind$address <- camps$address[match(data.ind$camp_name, camps$camp_name)]
