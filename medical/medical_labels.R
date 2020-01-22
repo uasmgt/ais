@@ -29,7 +29,7 @@ attr(medical.data$youth, "label") <- "Отдыхающие: сироты 18-23 (
 attr(medical.data$adults, "label") <- "Отдыхащие: сопровождающие"
 attr(medical.data$kids, "label") <- "Отдыхающие: дети (всего)"
 attr(medical.data$department, "label") <- "Отдыхающие: дети-сироты (ДТСЗН)"
-attr(medical.data$disabled, "label") <- "Отдыхающие: дети-инвалиды"
+attr(medical.data$disabled, "label") <- "Отдыхающие: дети-инвалиды (путёвки)"
 attr(medical.data$visitors, "label") <- "Отдыхающие (всего)"
 attr(medical.data$per_department, "label") <- "Доля детей-сирот (ДТСЗН) от кол-ва детей"
 attr(medical.data$per_disabled, "label") <- "Доля детей детей-инвалидов"
