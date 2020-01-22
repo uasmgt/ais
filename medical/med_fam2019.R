@@ -130,7 +130,13 @@ attr(data.med.fam$department, "label") <- "Отдыхающие: дети-сир
 attr(data.med.fam$disabled, "label") <- "Отдыхающие: дети-инвалиды"
 attr(data.med.fam$visitors, "label") <- "Отдыхающие (всего)"
 attr(data.med.fam$per_men, "label") <- "Кол-во обращений на одного отдыхающего"
-
+attr(data.med.fam$per_department, "label") <- "Доля детей-сирот (ДТСЗН) от кол-ва детей"
+attr(data.med.fam$per_disabled, "label") <- "Доля детей детей-инвалидов"
+attr(data.med.fam$per_disorders, "label") <- "Доля детей с нарушениями"
+attr(data.med.fam$per_mental, "label") <- "Доля детей с ментальными нарушениями"
+attr(data.med.fam$per_muscle_skeleton, "label") <- "Доля детей с нарушениями опорно-двигательного аппарата"
+attr(data.med.fam$per_dysfunction, "label") <- "Доля детей с нарушениями функций организма"
+attr(data.med.fam$per_sensorial, "label") <- "Доля детей с сенсорными нарушениями"
 # Пересохранить переменную с указанием года
 data.med.fam -> med.fam2019
 
