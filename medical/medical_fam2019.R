@@ -26,7 +26,7 @@ file.names <- list.files(path = "./", recursive = TRUE,
                          pattern = "*.xlsx")
 file.list <- lapply(file.names, read.xlsx)
 # Создать подмассив со сведениями о заездах
-session.data <- lapply(file.list, GetFamInfo2019)
+session.data <- lapply(file.list, GetInfo)
 session.data <- data.frame(matrix(unlist(session.data), 
                                   nrow=length(session.data), byrow=TRUE))
 # Создать подмассив со сведениями об обращениях
@@ -57,34 +57,8 @@ medical.data$region <- camps$region[match(medical.data$camp_name,
 # Рассчитать продолжительность заезда
 medical.data$duration <- medical.data$date_out - medical.data$date_in + 1
 
-# Подгрузить данные о количестве отдыхающих
-medical.data$youth <- data.arrivals$youth_visits
-medical.data$adults <- data.arrivals$parents_visits + data.arrivals$add_parents_visits
-medical.data$kids <- data.arrivals$kids_visits + data.arrivals$add_kids_visits + 
-  data.arrivals$dep_visits
-medical.data$department <- data.arrivals$dep_visits
-medical.data$disabled <- data.arrivals$disabled
-medical.data$visitors <- data.arrivals$visits_total
-medical.data$disorders <- data.arrivals$disorders_total
-medical.data$mental <-  data.arrivals$mental
-medical.data$muscle_skeleton <- data.arrivals$muscle_skeleton
-medical.data$dysfunction <- data.arrivals$dysfunction
-medical.data$sensorial <- data.arrivals$sensorial
-
-# Удалить заезды без отдыхающих ----------------------------------------
-medical.data <- medical.data %>% filter(visitors != 0)
-
-# Рассчитать доли детей разных категорий от числа детей ----------------
-medical.data$per_department <- medical.data$department / medical.data$kids
-medical.data$per_disabled <- medical.data$disabled / medical.data$kids
-medical.data$per_disorders <- medical.data$disorders / medical.data$kids
-medical.data$per_mental <- medical.data$mental / medical.data$kids
-medical.data$per_muscle_skeleton <- medical.data$muscle_skeleton /medical.data$kids
-medical.data$per_dysfunction <- medical.data$dysfunction / medical.data$kids
-medical.data$per_sensorial <- medical.data$sensorial / medical.data$kids
-
-medical.data$dys_per_men <- medical.data$dys_sum / medical.data$visitors
-medical.data$trm_per_men <- medical.data$trm_sum / medical.data$visitors
+# Рассчитать доли групп отдыхающих -------------------------------------
+source("~/git/ais/medical/medical_percents_fam.R")
 
 # Присвоение атрибутов -------------------------------------------------
 source("~/git/ais/medical/medical_labels.R", encoding = "UTF-8")

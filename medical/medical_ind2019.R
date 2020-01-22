@@ -25,7 +25,7 @@ file.names <- list.files(path = "./", recursive = TRUE,
                          pattern = "*.xlsx")
 file.list <- lapply(file.names, read.xlsx)
 # Создать подмассив со сведениями о заездах
-session.data <- lapply(file.list, GetIndInfo2019)
+session.data <- lapply(file.list, GetInfo)
 session.data <- data.frame(matrix(unlist(session.data), 
                                   nrow=length(session.data), byrow=TRUE))
 # Создать подмассив со сведениями об обращениях
@@ -39,7 +39,7 @@ medical.data[ , c(1:ncol(medical.data))] <- apply(
   function(x) as.numeric(as.character(x)))
 # Объединить массивы
 medical.data <- cbind(session.data, medical.data)
-colnames(medical.data) <- c("camp_name", "session", "date_in", "date_out",
+colnames(medical.data) <- c("camp_name", "date_in", "date_out",
                             traumas, "trm_sum", "trm_ins", dyscrasia, 
                             "dys_sum", "dys_ins")
 
