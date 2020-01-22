@@ -67,9 +67,10 @@ data.med.fam[ , convert.cols] <- apply(data.med.fam[ , convert.cols], 2,
                                        function(x) as.numeric(as.character(x)))
 
 # Добавление информации о расположении лагерей -------------------------
-# Дополнительные данные (расположение и адрес лагерей) -----------------
+# Расположение лагерей и продолжительность заезда ----------------------
 load("~/data/camps.rda")
 data.med.fam$region <- camps$region[match(data.med.fam$camp_name, camps[, 1])]
+data.med.fam$duration <- data.med.fam$date_out - data.med.fam$date_in + 1
 
 data.med.fam <- unique(data.med.fam)
 # Подгрузить данные о количестве отдыхающих
@@ -107,6 +108,7 @@ data.med.fam$per_men <- round(data.med.fam$total / data.med.fam$visitors, 2)
 attr(data.med.fam$camp_name, "label") <- "Название организации"
 attr(data.med.fam$date_in, "label") <- "Дата заезда"
 attr(data.med.fam$date_out, "label") <- "Дата выезда"
+attr(data.med.fam$duration, "label") <- "Продолжительность заезда"
 attr(data.med.fam$infections_infestations, "label") <- "Инфекционные и паразитарные болезни"
 attr(data.med.fam$endocrine, "label") <- "Болезни эндокринной системы, нарушения обмена веществ"
 attr(data.med.fam$nervous, "label") <- "Болезни нервной системы"
