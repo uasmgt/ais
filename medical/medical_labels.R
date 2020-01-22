@@ -1,47 +1,51 @@
-attr(medical.data$camp_name, "label") <- "Название организации"
-attr(medical.data$date_in, "label") <- "Дата заезда"
-attr(medical.data$date_out, "label") <- "Дата выезда"
-attr(medical.data$fracture, "label") <- "Переломы"
-attr(medical.data$brain_damage, "label") <- "Черепно-мозговые травмы"
-attr(medical.data$dislocation_distortion, "label") <- "Вывихи, растяжения"
-attr(medical.data$ambustion, "label") <- "Термические и химические ожоги"
-attr(medical.data$other, "label") <- "Прочие (царапины, порезы, ушибы)"
-attr(medical.data$trm_sum, "label") <- "Всего обращений (травмы)"
-attr(medical.data$trm_ins, "label") <- "Всего страховых случаев (травмы)"
-attr(medical.data$infections_infestations, "label") <- "Инфекционные и паразитарные болезни"
-attr(medical.data$endocrine, "label") <- "Болезни эндокринной системы, нарушения обмена веществ"
-attr(medical.data$nervous, "label") <- "Болезни нервной системы"
-attr(medical.data$ocular, "label") <- "Болезни глаза"
-attr(medical.data$otorhinolaryngology, "label") <- "Оториноларигологические болезни"
-attr(medical.data$heart, "label") <- "Болезни сердечно-сосудистой системы"
-attr(medical.data$respiratory, "label") <- "Болезни органов дыхания"
-attr(medical.data$digestive, "label") <- "Болезни органов пищеварения"
-attr(medical.data$urogenital, "label") <- "Болезни органов мочеполовой системы"
-attr(medical.data$intoxication, "label") <- "Отравления"
-attr(medical.data$heat_apoplexy, "label") <- "Тепловые удары"
-attr(medical.data$acute, "label") <- "Экстренные и неотложные состояния"
-attr(medical.data$tetter, "label") <- "Болезни кожи неинфекционные"
-attr(medical.data$dys_sum, "label") <- "Всего обращений"
-attr(medical.data$dys_ins, "label") <- "Всего страховых случаев"
-attr(medical.data$region, "label") <- "Регион"
-attr(medical.data$duration, "label") <- "Продолжительность заезда"
-attr(medical.data$youth, "label") <- "Отдыхающие: сироты 18-23 (молодёжный отдых)"
-attr(medical.data$adults, "label") <- "Отдыхащие: сопровождающие"
-attr(medical.data$kids, "label") <- "Отдыхающие: дети (всего)"
-attr(medical.data$department, "label") <- "Отдыхающие: дети-сироты (ДТСЗН)"
-attr(medical.data$disabled, "label") <- "Отдыхающие: дети-инвалиды (путёвки)"
-attr(medical.data$visitors, "label") <- "Отдыхающие (всего)"
-attr(medical.data$per_department, "label") <- "Доля детей-сирот (ДТСЗН) от кол-ва детей"
-attr(medical.data$per_disabled, "label") <- "Доля детей детей-инвалидов"
-attr(medical.data$per_disorders, "label") <- "Доля детей с нарушениями"
-attr(medical.data$per_mental, "label") <- "Доля детей с ментальными нарушениями"
-attr(medical.data$per_muscle_skeleton, "label") <- "Доля детей с нарушениями опорно-двигательного аппарата"
-attr(medical.data$per_dysfunction, "label") <- "Доля детей с нарушениями функций организма"
-attr(medical.data$per_sensorial, "label") <- "Доля детей с сенсорными нарушениями"
-attr(medical.data$disorders, "label") <- "Кол-во детей с нарушениями"
-attr(medical.data$mental, "label") <- "Кол-во детей с ментальными нарушениями"
-attr(medical.data$muscle_skeleton, "label") <- "Кол-во детей с нарушениями опорно-двигательного аппарата"
-attr(medical.data$dysfunction, "label") <- "Кол-во детей с нарушениями функций организма"
-attr(medical.data$sensorial, "label") <- "Кол-во детей с сенсорными нарушениями"
-attr(medical.data$dys_per_men, "label") <- "Кол-во обращений из-за заболеваний на одного отдыхающего"
-attr(medical.data$trm_per_men, "label") <- "Кол-во обращений из-за травм на одного отдыхающего"
+var.labels <- c(camp_name = "Название организации",
+               date_in = "Дата заезда",
+               date_out = "Дата выезда",
+               fracture = "Переломы",
+               brain_damage = "Черепно-мозговые травмы",
+               dislocation_distortion = "Вывихи, растяжения",
+               ambustion = "Термические и химические ожоги",
+               other = "Прочие (царапины, порезы, ушибы)",
+               trm_sum = "Всего обращений (травмы)",
+               trm_ins = "Всего страховых случаев (травмы)",
+               infections_infestations = "Инфекционные и паразитарные болезни",
+               endocrine = "Болезни эндокринной системы, нарушения обмена веществ",
+               nervous = "Болезни нервной системы",
+               ocular = "Болезни глаза",
+               otorhinolaryngology = "Оториноларигологические болезни",
+               heart = "Болезни сердечно-сосудистой системы",
+               respiratory = "Болезни органов дыхания",
+               digestive = "Болезни органов пищеварения",
+               urogenital = "Болезни органов мочеполовой системы",
+               intoxication = "Отравления",
+               heat_apoplexy = "Тепловые удары",
+               acute = "Экстренные и неотложные состояния",
+               tetter = "Болезни кожи неинфекционные",
+               dys_sum = "Всего обращений",
+               dys_ins = "Всего страховых случаев",
+               region = "Регион",
+               duration = "Продолжительность заезда",
+               kids = "Отдыхающие: дети (всего)",
+               department = "Отдыхающие: дети-сироты (ДТСЗН)",
+               disabled = "Отдыхающие: дети-инвалиды (путёвки)",
+               per_department = "Доля детей-сирот (ДТСЗН) от кол-ва детей",
+               per_disabled = "Доля детей детей-инвалидов",
+               per_disorders = "Доля детей с нарушениями",
+               per_mental = "Доля детей с ментальными нарушениями",
+               per_muscle_skeleton = "Доля детей с нарушениями опорно-двигательного аппарата",
+               per_dysfunction = "Доля детей с нарушениями функций организма",
+               per_sensorial = "Доля детей с сенсорными нарушениями",
+               disorders = "Кол-во детей с нарушениями",
+               mental = "Кол-во детей с ментальными нарушениями",
+               muscle_skeleton = "Кол-во детей с нарушениями опорно-двигательного аппарата",
+               dysfunction = "Кол-во детей с нарушениями функций организма",
+               sensorial = "Кол-во детей с сенсорными нарушениями",
+               dys_per_men = "Кол-во обращений из-за заболеваний на одного отдыхающего",
+               trm_per_men = "Кол-во обращений из-за травм на одного отдыхающего",
+               session = "Смена",
+               youth = "Отдыхающие: сироты 18-23 (молодёжный отдых)",
+               adults = "Отдыхащие: сопровождающие",
+               visitors = "Отдыхающие (всего)")
+
+label(medical.data) <-  lapply(names(medical.data), 
+                               function(x) var.labels[match(x, names(var.labels))])

@@ -19,6 +19,27 @@ GetFamInfo2019 <- function(x){
   string <- cbind(camp, date.in, date.out)
 }
 
+GetIndInfo2019 <- function(x){
+  camp <- x[1, 2] # название лагеря
+  if (ncol(x) == 23 | ncol(x) == 24){
+    sess <- x[1, 14]
+    term <- as.character(x[1, 21])
+  } else if (ncol(x) >= 16){
+    sess <- x[1, 10]
+    term <- as.character(x[1, 14])
+  } else if (ncol(x) <= 14){
+    sess <- x[1, 6]
+    term <- as.character(x[1, 8])
+  } else {
+    sess <- NA
+    term <- " - "
+  }
+  term <- unlist(strsplit(term, split = " - "))
+  date.in  <- term[1]
+  date.out <- term[2]
+  string <- cbind(camp, sess, date.in, date.out)
+}
+
 GetMedical2019 <- function(x){
   trm01 <- x[4, ncol(x)]
   trm02 <- x[5, ncol(x)]
