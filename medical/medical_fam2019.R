@@ -7,7 +7,7 @@ library(Hmisc)
 source("~/git/ais/medical/medical_functions.R")
 
 # Подгрузить дополнительные данные ------------------------------------------------
-load("~/data/data_fam_2019.rda")
+data.arrivals <- get(load("~/data/data_fam_2019.rda"))
 camps <- read.csv2("~/data/camps.csv")
 
 # Названия колонок для заболеваний и травм -----------------------------
@@ -58,18 +58,18 @@ medical.data$region <- camps$region[match(medical.data$camp_name,
 medical.data$duration <- medical.data$date_out - medical.data$date_in + 1
 
 # Подгрузить данные о количестве отдыхающих
-medical.data$youth <- fam2019$youth_visits
-medical.data$adults <- fam2019$parents_visits + fam2019$add_parents_visits
-medical.data$kids <- fam2019$kids_visits + fam2019$add_kids_visits + 
-  fam2019$dep_visits
-medical.data$department <- fam2019$dep_visits
-medical.data$disabled <- fam2019$disabled
-medical.data$visitors <- fam2019$visits_total
-medical.data$disorders <- fam2019$disorders_total
-medical.data$mental <-  fam2019$mental
-medical.data$muscle_skeleton <- fam2019$muscle_skeleton
-medical.data$dysfunction <- fam2019$dysfunction
-medical.data$sensorial <- fam2019$sensorial
+medical.data$youth <- data.arrivals$youth_visits
+medical.data$adults <- data.arrivals$parents_visits + data.arrivals$add_parents_visits
+medical.data$kids <- data.arrivals$kids_visits + data.arrivals$add_kids_visits + 
+  data.arrivals$dep_visits
+medical.data$department <- data.arrivals$dep_visits
+medical.data$disabled <- data.arrivals$disabled
+medical.data$visitors <- data.arrivals$visits_total
+medical.data$disorders <- data.arrivals$disorders_total
+medical.data$mental <-  data.arrivals$mental
+medical.data$muscle_skeleton <- data.arrivals$muscle_skeleton
+medical.data$dysfunction <- data.arrivals$dysfunction
+medical.data$sensorial <- data.arrivals$sensorial
 
 # Удалить заезды без отдыхающих ----------------------------------------
 medical.data <- medical.data %>% filter(visitors != 0)
