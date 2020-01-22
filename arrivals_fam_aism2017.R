@@ -1,0 +1,187 @@
+# Необходимые пакеты ---------------------------------------------------
+library(openxlsx)
+library(dplyr)
+library(tidyr)
+
+# Directory
+setwd("~/aism/2017")
+
+# Данные из АИСО
+aiso.register <- get(load("~/data/aiso_vouchers_2017.rda"))
+rm(vouchers.aiso.2017)
+
+aiso.register$id <- paste(aiso.register$IDser_camper, 
+                          aiso.register$IDno_camper)
+aiso.disabled <- aiso.register %>% filter(benefit == "Дети-инвалиды, дети с ограниченными возможностями здоровья" |
+                                            benefit == "Дети-инвалиды")
+aiso.orphans <- aiso.register %>% filter(benefit == "Дети-сироты и дети, оставшиеся без попечения родителей, находящиеся под опекой, попечительством, в том числе в приемной или патронатной семье" |
+                                           benefit == "Дети-сироты")
+aiso.needy <- aiso.register %>% filter(benefit == "Дети из малообеспеченных семей")
+aiso.youth <- aiso.register %>% filter(purpose == "Молодёжный отдых для лиц из числа детей-сирот и детей, оставшихся без попечения родителей, 18-23 лет")
+
+# Дополнительные данные (расположение и адрес лагерей) -----------------
+load("~/data/camps.rda")
+
+# Функции --------------------------------------------------------------
+CreateRow <- function(x){
+  names(x) <- as.character(unlist(x[4, ]))     # название колонок
+  x <- x[-c(1:4), ]                            # удаление пустых рядов
+  x <- x[c(1, 2, 3, 5, 6, 9, 10, 23)]             # удаление ненужных колонок
+  x$`Возраст` <- as.numeric(x$`Возраст`)       # ЗАЧЕМ НАМ ВОЗРАСТ?!
+  # разбиение массива на подмассивы
+  #  commercials <- x %>% filter(`Цель обращения` == "Дополнительные места и услуги для совместного отдыха")
+  commercials <- subset(x, grepl("[A-Z]{3}", `Номер заявления`))
+  department <- x %>% filter(`Цель обращения` == "Отдых для сирот (совместный отдых)")
+  youth <- x %>% filter(`Цель обращения` == "Молодёжный отдых для лиц из числа детей-сирот и детей, оставшихся без попечения родителей, 18-23 лет")
+  portal <- subset(x, grepl("[0-9]{4}\\-[0-9]{7}\\-[0-9]{6}\\-[0-9]{7}\\/[0-9]{2}", `Номер заявления`))
+  portal <- portal %>% filter(`Цель обращения` != "Отдых для сирот (совместный отдых)")
+  portal <- portal %>% filter(`Цель обращения` != "Молодёжный отдых для лиц из числа детей-сирот и детей, оставшихся без попечения родителей, 18-23 лет")
+  # подсчёт количества
+  commercials.arrived <- nrow(commercials %>% filter(`Заехал` == "Заехал"))
+  commercials.kids <- nrow(commercials %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Ребёнок"))
+  commercials.adults <- nrow(commercials %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Сопровождающий"))
+  commercials.nonarrived <- nrow(commercials %>% filter(`Заехал` == "Не заехал"))
+  commercials.nonarrived.kids <- nrow(commercials %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"))
+  commercials.nonarrived.adults <- nrow(commercials %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Сопровождающий"))
+  
+  department.arrived <- nrow(department %>% filter(`Заехал` == "Заехал"))
+  department.kids <- nrow(department %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Ребёнок" & `Возраст` < 8))
+  department.youth <- nrow(department %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Ребёнок" & `Возраст` > 17))
+  department.tutors <- nrow(department %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Воспитатель"))
+  department.nonarrived <- nrow(department %>% filter(`Заехал` == "Не заехал"))
+  department.nonarrived.kids <- nrow(department %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"  & `Возраст` < 8))
+  department.nonarrived.youth <- nrow(department %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"  & `Возраст` > 17))
+  department.nonarrived.tutors <- nrow(department %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Воспитатель"))
+  
+  portal.arrived <- nrow(portal %>% filter(`Заехал` == "Заехал"))
+  portal.kids <- portal %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Ребёнок")
+  portal.adults <- portal %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Сопровождающий")
+  
+  mental <- nrow(x %>% filter(`Заехал` == "Заехал" & 
+                                `Вид ограничения` == "Ментальные, психические и неврологические нарушения"))
+  muscle.skeleton <- nrow(x %>% filter(`Заехал` == "Заехал" & 
+                                         `Вид ограничения` == "Нарушения опорно-двигательного аппарата"))
+  dysfunction <- nrow(x %>% filter(`Заехал` == "Заехал" & 
+                                     `Вид ограничения` == "Нарушения функций систем организма"))
+  sensorial <- nrow(x %>% filter(`Заехал` == "Заехал" &
+                                   `Вид ограничения` == "Сенсорные нарушения"))
+  disorders.total <- nrow(x %>% filter(`Заехал` == "Заехал" & `Вид ограничения` != "-"))
+  
+  portal.nonarrived <- nrow(portal %>% filter(`Заехал` == "Не заехал"))
+  portal.nonarrived.kids <- nrow(portal %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"))
+  portal.nonarrived.adults <- nrow(portal %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Сопровождающий"))
+  
+  diasbled.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% aiso.disabled$id, ])
+  orphan.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% aiso.orphans$id, ])
+  needy.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% aiso.needy$id, ])
+  
+  youth.nonarrived <- youth %>% filter(`Заехал` == "Не заехал")
+  youth.arrived <- youth %>% filter(`Заехал` == "Заехал")
+  youth.nonarrived <- nrow(youth.nonarrived[youth.nonarrived$`Номер документа` %in% aiso.youth$id, ])
+  youth.arrived <- nrow(youth.arrived[youth.arrived$`Номер документа` %in% aiso.youth$id, ])
+  
+  arrived.total <- portal.arrived + youth.arrived + 
+    commercials.arrived + department.arrived
+  
+  nonarrived.total <- portal.nonarrived + youth.nonarrived + 
+    commercials.nonarrived + department.nonarrived
+  
+  # запись в строку
+  row <- cbind(portal.arrived, nrow(portal.kids), diasbled.kids,
+               orphan.kids, needy.kids, nrow(portal.adults),
+               portal.nonarrived, portal.nonarrived.kids, portal.nonarrived.adults, 
+               youth.arrived, youth.nonarrived, commercials.arrived, 
+               commercials.kids, commercials.adults, commercials.nonarrived,
+               commercials.nonarrived.kids, commercials.nonarrived.adults,
+               department.arrived, department.kids, department.youth, 
+               department.tutors, department.nonarrived, 
+               department.nonarrived.kids, department.nonarrived.youth, 
+               department.nonarrived.tutors, arrived.total,
+               mental, muscle.skeleton, dysfunction, sensorial,
+               disorders.total, nonarrived.total)
+  return(row)
+}
+
+GetSessionInfo <- function(x){
+  x <- read.xlsx(x, sheet = 1)
+  camp <- x[1, 2]
+  if (ncol(x) == 22 | ncol(x) == 23 | ncol(x) == 24){ # проверка размерности
+    term <- as.character(x[1, 21])    # период отдыха
+  } else if (ncol(x) == 16 | ncol(x) == 17 | ncol(x) == 18 | ncol(x) == 19 | ncol(x) == 20){      # далее см. комментарии выше
+    term <- as.character(x[1, 14])
+  } else if (ncol(x) == 30){      # далее см. комментарии выше
+    term <- as.character(x[1, 26])
+  } else if (ncol(x) == 10 | ncol(x) == 13){
+    term <- as.character(x[1, 9])
+  }  else if (ncol(x) == 11){      # далее см. комментарии выше
+    term <- as.character(x[1, 8])
+  } else {
+    term <- " - "
+  }
+  term <- unlist(strsplit(term, split = " - ")) # разбивка периода отдыха на даты заезда и выезда
+  date.in  <- term[1]                           # дата заезда
+  date.out <- term[2]                           # дата выезда
+  info <- cbind(camp, date.in, date.out)  # запись переменных в строку
+  return(info) # возврат массива
+}
+
+Exceler <- function(x){
+  file <- read.xlsx(x, sheet = 3)
+}
+
+# Create dataset ----
+setwd("arrivals_fam/")
+
+files.fam <- list.files(path = "./", recursive = TRUE, pattern = "*.xlsx")
+list.fam <- lapply(files.fam, Exceler)
+dataset.fam <- lapply(list.fam, CreateRow)
+dataset.fam <- data.frame(matrix(unlist(dataset.fam), nrow=length(dataset.fam), byrow=TRUE))
+
+colnames(dataset.fam) <- c("family_visits", "kids_visits", "disabled", 
+                           "orphans", "needy", "parents_visits", "family_non",
+                           "kids_non", "parents_non", "youth_visits",
+                           "youth_non", "add_visits", "add_kids_visits",
+                           "add_parents_visits", "add_non", "add_kids_non",
+                           "add_parents_non", "dep_visits", "dep_orphans_u7_visits",
+                           "dep_orphans_o18_visits", "dep_educators_visits",
+                           "dep_non", "dep_orphans_u7_non", "dep_orphans_o18_non",
+                           "dep_educators_non", "visits_total", 
+                           "mental", "muscle_skeleton", "dysfunction",
+                           "sensorial", "disorders_total", "non_total")
+
+convert.cols <- c(1:32)
+dataset.fam[ , convert.cols] <- apply(dataset.fam[ , convert.cols], 2,
+                                      function(x) as.numeric(as.character(x)))
+
+# Add turnout date
+info.list <- lapply(files.fam, GetSessionInfo)
+dataset.info <- data.frame(matrix(unlist(info.list), 
+                                  nrow=length(info.list), byrow=TRUE))
+colnames(dataset.info) <- c("camp_name", "date_in", "date_out")
+
+# Create pre-final dataset
+data.fam <- cbind(dataset.info, dataset.fam)
+
+# Обработка дат --------------------------------------------------------
+data.fam$date_in <- as.Date(data.fam$date_in, format = "%d.%m.%Y")
+data.fam$date_out <- as.Date(data.fam$date_out, format = "%d.%m.%Y")
+
+# Добавление информации о расположении лагерей -------------------------
+# data.ind$zone <- camps$zone[match(data.ind$camp_name, camps$camp_name)]
+data.fam$region <- camps$region[match(data.fam$camp_name, camps$camp_name)]
+# data.ind$address <- camps$address[match(data.ind$camp_name, camps$camp_name)]
+# data.ind <- data.ind %>% drop_na(camp_name)
+
+# Пересохранение в переменную с указанием года и удаление дубликатов
+unique(data.fam) -> fam2017
+
+# Удаление вспомогательных переменных
+rm(list = ls(pattern = "(dataset.)|(info.)|(list.)|(files.)|(aiso.)|(camps)|(data.)|(convert.)"))
+
+# Сохранение результатов -----------------------------------------------
+# (расскомментировать соответствующие строки)
+# Сохранение массива для анализа в R
+# save(fam2017, file = "~/data/data_fam_2017.rda")
+
+# Сохранение массива в формате csv для работы в MS Excel / LO Calc
+# write.csv2(fam2017, file = "~/data/data_fam_2017.csv", row.names = FALSE)
