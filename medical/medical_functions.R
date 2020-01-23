@@ -6,7 +6,7 @@ GetInfo <- function(x){
     term <- as.character(x[1, 20])
   } else if (ncol(x) >= 16){
     term <- as.character(x[1, 14])
-  } else if (ncol(x) <= 14){
+  } else if (ncol(x) <= 15){
     term <- as.character(x[1, 8])
   } else {
     term <- " - "

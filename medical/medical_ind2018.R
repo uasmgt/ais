@@ -33,7 +33,6 @@ medical.data <- lapply(file.list, GetMedical2018)
 medical.data <- data.frame(matrix(unlist(medical.data), 
                                   nrow=length(medical.data), byrow=TRUE))
 # Конвертировать переменные 
-# convert.cols <- c(1:ncol(medical.data))
 medical.data[ , c(1:ncol(medical.data))] <- apply(
   medical.data[ , c(1:ncol(medical.data))], 2,
   function(x) as.numeric(as.character(x)))
@@ -48,14 +47,15 @@ medical.data$date_in <- as.Date(medical.data$date_in,
                                 format = "%d.%m.%Y")
 medical.data$date_out <- as.Date(medical.data$date_out, 
                                  format = "%d.%m.%Y")
-# Удаление дубликатов
-medical.data <- unique(medical.data)
 
 # Задать расположение лагеря
 medical.data$region <- camps$region[match(medical.data$camp_name, 
                                           camps$camp_name)]
 # Рассчитать продолжительность заезда
 medical.data$duration <- medical.data$date_out - medical.data$date_in + 1
+
+# Удаление дубликатов
+# medical.data <- unique(medical.data)
 
 # Рассчитать доли групп отдыхающих -------------------------------------
 source("~/git/ais/medical/medical_percents_ind.R")
@@ -64,7 +64,7 @@ source("~/git/ais/medical/medical_percents_ind.R")
 source("~/git/ais/medical/medical_labels.R", encoding = "UTF-8")
 
 # Сохранение данных
-medical.data -> medical.ind2018
+unique(medical.data) -> medical.ind2018
 save(medical.ind2018, file = "~/data/medical_ind2018.rda")
 write.csv2(medical.ind2018, file = "~/data/medical_ind2018.csv",
            row.names = FALSE)

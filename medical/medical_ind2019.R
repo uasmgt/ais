@@ -48,14 +48,15 @@ medical.data$date_in <- as.Date(medical.data$date_in,
                                 format = "%d.%m.%Y")
 medical.data$date_out <- as.Date(medical.data$date_out, 
                                  format = "%d.%m.%Y")
-# Удаление дубликатов
-medical.data <- unique(medical.data)
 
 # Задать расположение лагеря
 medical.data$region <- camps$region[match(medical.data$camp_name, 
                                           camps$camp_name)]
 # Рассчитать продолжительность заезда
 medical.data$duration <- medical.data$date_out - medical.data$date_in + 1
+
+# Удаление дубликатов
+medical.data <- unique(medical.data)
 
 # Рассчитать доли групп отдыхающих -------------------------------------
 source("~/git/ais/medical/medical_percents_ind.R")

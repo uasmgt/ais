@@ -8,16 +8,16 @@ source("~/git/ais/arrivals_functions.R")
 
 # Дополнительные данные ------------------------------------------------
 # Данные из АИСО
-aiso.register <- get(load("~/data/aiso_vouchers_2018.rda"))
+aiso.register <- get(load("~/data/aiso_vouchers_2017.rda"))
 source("~/git/ais/beneficiaries.R")
 # Реестр отказов 
-denials.data <- read.csv2("~/data/denials_ind2018.csv", 
+denials.data <- read.csv2("~/data/denials_ind2017.csv", 
                           encoding = "UTF-8")
 # Данные о лагерях
 camps <- read.csv2("~/data/camps.csv")
 
 # Создание массива -----------------------------------------------------
-setwd("~/aism/2018/arrivals_ind")
+setwd("~/aism/2017/arrivals_ind")
 
 file.names <- list.files(path = "./", recursive = TRUE, 
                          pattern = "*.xlsx") # чтение названий xlsx-файлов
@@ -46,14 +46,13 @@ data.ind <- cbind(session.data, staff.data, data.arrivals)
 data.ind$date_in <- as.Date(data.ind$date_in, format = "%d.%m.%Y")
 data.ind$date_out <- as.Date(data.ind$date_out, format = "%d.%m.%Y")
 
-# Дополнительныебавление региона ---------------------------------------------------
+# Добавление региона ---------------------------------------------------
 data.ind$region <- camps$region[match(data.ind$camp_name, camps$camp_name)]
 
 # Сохранение массива ---------------------------------------------------
-# unique(data.ind) -> ind2018
-data.ind -> ind2018
-save(ind2018, file = "~/data/data_ind_2018.rda")
-write.csv2(ind2018, file = "~/data/data_ind_2018.csv", row.names = FALSE)
+unique(data.ind) -> ind2017
+save(ind2017, file = "~/data/data_ind_2017.rda")
+write.csv2(ind2017, file = "~/data/data_ind_2017.csv", row.names = FALSE)
 
 # Очистка окружения
-rm(list = setdiff(ls(), "ind2018"))
+rm(list = setdiff(ls(), "ind2017"))
