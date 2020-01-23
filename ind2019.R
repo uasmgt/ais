@@ -52,6 +52,7 @@ data.ind$region <- camps$region[match(data.ind$camp_name, camps$camp_name)]
 # Сохранение массива ---------------------------------------------------
 unique(data.ind) -> ind2019
 save(ind2019, file = "~/data/data_ind_2019.rda")
+write.csv2(ind2019, file = "~/data/data_ind_2019.csv", row.names = FALSE)
 
 # Очистка окружения
 rm(list = setdiff(ls(), "ind2019"))
