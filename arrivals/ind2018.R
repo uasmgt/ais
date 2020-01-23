@@ -4,12 +4,13 @@ library(dplyr)
 library(tidyr)
 
 # Функции --------------------------------------------------------------
-source("~/git/ais/arrivals_functions.R")
+source("~/git/ais/arrivals/arrivals_functions.R")
 
 # Дополнительные данные ------------------------------------------------
 # Данные из АИСО
 aiso.register <- get(load("~/data/aiso_vouchers_2018.rda"))
-source("~/git/ais/beneficiaries.R")
+source("~/git/ais/arrivals/beneficiaries.R")
+
 # Реестр отказов 
 denials.data <- read.csv2("~/data/denials_ind2018.csv", 
                           encoding = "UTF-8")
