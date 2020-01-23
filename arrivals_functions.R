@@ -44,7 +44,7 @@ GetStaff <- function(x){
   return(tutors.num) # возврат значения
 }
 
-CreateRow <- function(x){
+CountInd <- function(x){
   # Подготовка xlsx-файла к анализу
   names(x) <- as.character(unlist(x[4, ]))     # чтение заголовков столбцов
   x <- x[-c(1:4), ]                            # удаление пустых строк
@@ -99,7 +99,7 @@ ReadSheets <- function(x){
   }
   l.sheets <- l.sheets[-c(1, 2)]                    # удаление листов со сведениями о заезде и пед. персонале
   l.sheets <- Filter(function(x) {ncol(x) == 30}, l.sheets) # обработка листов с отрядами
-  data <- lapply(l.sheets, CreateRow)               # создание по данным отрядов заезда
+  data <- lapply(l.sheets, CountInd)               # создание по данным отрядов заезда
   data <- data.frame(matrix(unlist(data), nrow=length(data), byrow=TRUE)) # табличное представление строки
   string <- data.frame(colSums(data)) # суммирование данных по отрядам
   return(string)
