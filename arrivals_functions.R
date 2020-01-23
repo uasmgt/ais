@@ -97,6 +97,87 @@ CountInd <- function(x){
                sensorial, disorders.total, non.arrivals.sum)
 }
 
+CountFam <- function(x){
+  x <- read.xlsx(x, sheet = 3)
+  names(x) <- as.character(unlist(x[4, ]))     # название колонок
+  x <- x[-c(1:4), ]                            # удаление пустых рядов
+  x <- x[c(1, 2, 3, 5, 6, 9, 10, 23)]             # удаление ненужных колонок
+  x$`Возраст` <- as.numeric(x$`Возраст`)       # ЗАЧЕМ НАМ ВОЗРАСТ?!
+  # разбиение массива на подмассивы
+  #  commercials <- x %>% filter(`Цель обращения` == "Дополнительные места и услуги для совместного отдыха")
+  commercials <- subset(x, grepl("[A-Z]{3}", `Номер заявления`))
+  department <- x %>% filter(`Цель обращения` == "Отдых для сирот (совместный отдых)")
+  youth <- x %>% filter(`Цель обращения` == "Молодёжный отдых для лиц из числа детей-сирот и детей, оставшихся без попечения родителей, 18-23 лет")
+  portal <- subset(x, grepl("[0-9]{4}\\-[0-9]{7}\\-[0-9]{6}\\-[0-9]{7}\\/[0-9]{2}", `Номер заявления`))
+  portal <- portal %>% filter(`Цель обращения` != "Отдых для сирот (совместный отдых)")
+  portal <- portal %>% filter(`Цель обращения` != "Молодёжный отдых для лиц из числа детей-сирот и детей, оставшихся без попечения родителей, 18-23 лет")
+  # подсчёт количества
+  commercials.arrived <- nrow(commercials %>% filter(`Заехал` == "Заехал"))
+  commercials.kids <- nrow(commercials %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Ребёнок"))
+  commercials.adults <- nrow(commercials %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Сопровождающий"))
+  commercials.nonarrived <- nrow(commercials %>% filter(`Заехал` == "Не заехал"))
+  commercials.nonarrived.kids <- nrow(commercials %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"))
+  commercials.nonarrived.adults <- nrow(commercials %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Сопровождающий"))
+  
+  department.arrived <- nrow(department %>% filter(`Заехал` == "Заехал"))
+  department.kids <- nrow(department %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Ребёнок" & `Возраст` < 8))
+  department.youth <- nrow(department %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Ребёнок" & `Возраст` > 17))
+  department.tutors <- nrow(department %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Воспитатель"))
+  department.nonarrived <- nrow(department %>% filter(`Заехал` == "Не заехал"))
+  department.nonarrived.kids <- nrow(department %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"  & `Возраст` < 8))
+  department.nonarrived.youth <- nrow(department %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"  & `Возраст` > 17))
+  department.nonarrived.tutors <- nrow(department %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Воспитатель"))
+
+  portal.arrived <- nrow(portal %>% filter(`Заехал` == "Заехал"))
+  portal.kids <- portal %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Ребёнок")
+  portal.adults <- portal %>% filter(`Заехал` == "Заехал" & `Ребёнок / сопровождающий` == "Сопровождающий")
+  
+  mental <- nrow(x %>% filter(`Заехал` == "Заехал" & 
+                                `Вид ограничения` == "Ментальные, психические и неврологические нарушения"))
+  muscle.skeleton <- nrow(x %>% filter(`Заехал` == "Заехал" & 
+                                         `Вид ограничения` == "Нарушения опорно-двигательного аппарата"))
+  dysfunction <- nrow(x %>% filter(`Заехал` == "Заехал" & 
+                                     `Вид ограничения` == "Нарушения функций систем организма"))
+  sensorial <- nrow(x %>% filter(`Заехал` == "Заехал" &
+                                   `Вид ограничения` == "Сенсорные нарушения"))
+  disorders.total <- nrow(x %>% filter(`Заехал` == "Заехал" & `Вид ограничения` != "-"))
+  
+  portal.nonarrived <- nrow(portal %>% filter(`Заехал` == "Не заехал"))
+  portal.nonarrived.kids <- nrow(portal %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Ребёнок"))
+  portal.nonarrived.adults <- nrow(portal %>% filter(`Заехал` == "Не заехал"  & `Ребёнок / сопровождающий` == "Сопровождающий"))
+  
+  diasbled.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% aiso.disabled$id, ])
+  orphan.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% aiso.orphans$id, ])
+  needy.kids <- nrow(portal.kids[portal.kids$`Номер документа` %in% aiso.needy$id, ])
+  
+  youth.nonarrived <- youth %>% filter(`Заехал` == "Не заехал")
+  youth.arrived <- youth %>% filter(`Заехал` == "Заехал")
+  youth.nonarrived <- nrow(youth.nonarrived[youth.nonarrived$`Номер документа` %in% aiso.youth$id, ])
+  youth.arrived <- nrow(youth.arrived[youth.arrived$`Номер документа` %in% aiso.youth$id, ])
+  
+  arrived.total <- portal.arrived + youth.arrived + 
+    commercials.arrived + department.arrived
+  
+  nonarrived.total <- portal.nonarrived + youth.nonarrived + 
+    commercials.nonarrived + department.nonarrived
+  
+  # запись в строку
+  row <- cbind(portal.arrived, nrow(portal.kids), diasbled.kids,
+               orphan.kids, needy.kids, nrow(portal.adults),
+               portal.nonarrived, portal.nonarrived.kids, portal.nonarrived.adults, 
+               youth.arrived, youth.nonarrived, commercials.arrived, 
+               commercials.kids, commercials.adults, commercials.nonarrived,
+               commercials.nonarrived.kids, commercials.nonarrived.adults,
+               department.arrived, department.kids, department.youth, 
+               department.tutors, department.nonarrived, 
+               department.nonarrived.kids, department.nonarrived.youth, 
+               department.nonarrived.tutors, arrived.total,
+               mental, muscle.skeleton, dysfunction, sensorial,
+               disorders.total, nonarrived.total)
+  return(row)
+}
+
+
 ReadSheets <- function(x){
   n.sheets <- getSheetNames(x) # сбор заголовков листов в xlsx-файле
   l.sheets <- as.list(rep(NA, c(length(n.sheets)))) # создание листа с листами (ха-ха)
