@@ -54,6 +54,9 @@ colnames(aiso.register) <- c("app_no", "app_no_portal", "voucher_no",
                              "email", "name_mother", "birthdate_mother",
                              "name_father", "birthdate_father")
 
+aiso.register <- data.frame(aiso.register)
+aiso.register$age_camper <- as.numeric(aiso.register$age_camper)
+
 # Присвоение столбцам атрибутов ----------------------------------------
 attr(aiso.register$app_no, "label") <- "Номер заявления"
 attr(aiso.register$app_no_portal, "label") <- "Номер заявления с МПГУ"
