@@ -8,11 +8,12 @@
 # Необходимые пакеты ---------------------------------------------------
 # install.packages("openxlsx")
 library(openxlsx)
+library(lubridate)
 
 # Указание рабочей директории ------------------------------------------
 # Раскомментировать и ввести корректный путь до загруженных 
 # и разархивированных файлов.
-# setwd("~/aiso/2019/")
+setwd("~/aiso/2014/vouchers/")
 
 # Функции --------------------------------------------------------------
 
@@ -37,25 +38,29 @@ CreateTable <- function(x)
 aiso.register <- CreateDataset("./")
 
 # Присвоение названий столбцов -----------------------------------------
-colnames(aiso.register) <- c("app_no", "app_no_portal", "voucher_no",
-                             "date_time", "status", "denial_reason",
-                             "exec_auth", "office", "list", 
-                             "payment", "purpose", "vacation_spot",
-                             "vacation_address", "period", "theme",
-                             "category", "surname_camper", "name_camper",
+colnames(aiso.register) <- c("app_no", "app_no_portal", 
+                             "voucher_no", "date_time", 
+                             "status", "denial_reason",
+                             "exec_auth", "office", 
+                             "list", "pay_status", 
+                             "purpose", "vacation_spot",
+                             "vacation_address", "period", 
+                             "theme", "category", "surname_camper", "name_camper",
                              "patronym_camper", "gender_camper", "birthdate_camper",
                              "age_camper", "birthplace_camper", "SNILS_camper", 
                              "ID_camper", "IDser_camper", "IDno_camper",
                              "IDissuedate_camper", "IDissueplace_camper", "disorder_cat",
                              "disorder_sub", "benefit", "reg_address", 
-                             "ticket_to_rejection", "ticket_from_rejection", "surname_applicant",
+                             "ticket_to_rejection", "ticket_from_rejection", "proxy", "surname_applicant",
                              "name_applicant", "patronym_applicant", "ID_applicant",
-                             "IDser_applicant", "IDno_applicant", "phone",
+                             "IDser_applicant", "IDno_applicant", "phone", 
                              "email", "name_mother", "birthdate_mother",
                              "name_father", "birthdate_father")
 
 aiso.register <- data.frame(aiso.register)
-aiso.register$age_camper <- as.numeric(aiso.register$age_camper)
+aiso.register$date_time <- as.POSIXct(aiso.register$date_time, format="%d.%m.%Y")
+aiso.register$birthdate_camper <- as.POSIXct(aiso.register$birthdate_camper, format="%d.%m.%Y")
+aiso.register$age_camper <-  year(aiso.register$date_time) - year(aiso.register$birthdate_camper)
 
 # Присвоение столбцам атрибутов ----------------------------------------
 attr(aiso.register$app_no, "label") <- "Номер заявления"
@@ -67,7 +72,7 @@ attr(aiso.register$denial_reason, "label") <- "Причина отказа"
 attr(aiso.register$exec_auth, "label") <- "ОИВ"
 attr(aiso.register$office, "label") <- "Учреждение"
 attr(aiso.register$list, "label") <- "Список"
-attr(aiso.register$payment, "label") <- "Статус оплаты"
+attr(aiso.register$pay_status, "label") <- "Статус оплаты"
 attr(aiso.register$purpose, "label") <- "Цель обращения"
 attr(aiso.register$vacation_spot, "label") <- "Место отдыха"
 attr(aiso.register$vacation_address, "label") <- "Адрес оздоровительной организации"
@@ -93,6 +98,7 @@ attr(aiso.register$benefit, "label") <- "Отдыхающий: вид льгот
 attr(aiso.register$reg_address, "label") <- "Отдыхающий: адрес регистрации"
 attr(aiso.register$ticket_to_rejection, "label") <- "Отдыхающий: отказ от билета (в место отдыха)"
 attr(aiso.register$ticket_from_rejection, "label") <- "Отдыхающий: отказ от билета (из места отдыха)"
+attr(aiso.register$proxy, "label") <- "Доверенность"
 attr(aiso.register$surname_applicant, "label") <- "Заявитель: Фамилия"
 attr(aiso.register$name_applicant, "label") <- "Заявитель: Имя"
 attr(aiso.register$patronym_applicant, "label") <- "Заявитель: Отчество"
