@@ -57,10 +57,10 @@ colnames(aiso.register) <- c("app_no", "app_no_portal",
                              "email", "name_mother", "birthdate_mother",
                              "name_father", "birthdate_father")
 
-aiso.register <- data.frame(aiso.register)
-aiso.register$date_time <- as.POSIXct(aiso.register$date_time, format="%d.%m.%Y")
-aiso.register$birthdate_camper <- as.POSIXct(aiso.register$birthdate_camper, format="%d.%m.%Y")
-aiso.register$age_camper <-  year(aiso.register$date_time) - year(aiso.register$birthdate_camper)
+aiso.register <- aiso.register %>%
+  mutate(app_date = dmy(substring(app_date, 1, 10)),
+         birthdate_camper = dmy(birthdate_camper),
+         age_camper = year(app_date) - year(birthdate_camper))
 
 # Присвоение столбцам атрибутов ----------------------------------------
 attr(aiso.register$app_no, "label") <- "Номер заявления"
