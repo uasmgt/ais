@@ -39,7 +39,7 @@ aiso.register <- CreateDataset("./")
 
 # Присвоение названий столбцов -----------------------------------------
 colnames(aiso.register) <- c("app_no", "app_no_portal", 
-                             "voucher_no", "date_time", 
+                             "voucher_no", "app_date", 
                              "status", "denial_reason",
                              "exec_auth", "office", 
                              "list", "pay_status", 
