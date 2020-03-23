@@ -62,6 +62,7 @@ aiso.register <- aiso.register %>%
          birthdate_camper = dmy(birthdate_camper),
          age_camper = year(app_date) - year(birthdate_camper))
 
+source("~/git/ais/aiso/aiso_labels.R")
 # Сохранение результатов -----------------------------------------------
 # (расскомментировать соответствующие строки)
 # aiso2020 <- aiso.register
