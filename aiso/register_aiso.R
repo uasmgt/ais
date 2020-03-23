@@ -64,8 +64,10 @@ aiso.register <- aiso.register %>%
 
 # Сохранение результатов -----------------------------------------------
 # (расскомментировать соответствующие строки)
+# aiso2020 <- aiso.register
+
 # Сохранение массива для анализа в R
-# save(aiso.register, file = "aiso_register.rda")
+# save(aiso2020, file = "aiso_register.rda")
 
 # Сохранение массива в формате csv для работы в MS Excel / LO Calc
-# write.csv2(aiso.register, file = "aiso_register.csv", row.names = FALSE)
+# write.csv2(aiso2020, file = "aiso_register.csv", row.names = FALSE)
