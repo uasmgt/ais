@@ -63,12 +63,15 @@ aiso.register <- aiso.register %>%
          age_camper = year(app_date) - year(birthdate_camper))
 
 source("~/git/ais/aiso/aiso_labels.R")
+
 # Сохранение результатов -----------------------------------------------
-# (расскомментировать соответствующие строки)
+# (расскомментировать соответствующие строки и задать правильные 
+# название для файлов)
+
 # aiso2020 <- aiso.register
 
 # Сохранение массива для анализа в R
-# save(aiso2020, file = "aiso_register.rda")
+# save(aiso2020, file = "~/data/aiso2020_200320.rda")
 
 # Сохранение массива в формате csv для работы в MS Excel / LO Calc
-# write.csv2(aiso2020, file = "aiso_register.csv", row.names = FALSE)
+# write.csv2(aiso2020, file = "~/data/aiso2020_200320.csv", row.names = FALSE)
