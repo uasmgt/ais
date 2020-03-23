@@ -20,7 +20,7 @@ library(lubridate)
 # Объединение выгрузок в одну таблицу
 CreateDataset <- function(x)
 {
-  files <- list.files(path = x, pattern = "Реестр") # создаёт список файлов
+  files <- list.files(path = x, pattern = ".xlsx", recursive = TRUE) # создаёт список файлов
   files.list <- lapply(files, read.xlsx) # создаёт лист необработанных таблиц
   dataset <- lapply(files.list, CreateTable) # обрабатывает таблицы в листе
   y <- do.call(rbind.data.frame, dataset) # объединяет таблицы
