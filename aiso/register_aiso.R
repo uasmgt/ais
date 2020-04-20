@@ -9,6 +9,7 @@
 # install.packages("openxlsx")
 library(openxlsx)
 library(lubridate)
+library(dplyr)
 
 # Указание рабочей директории ------------------------------------------
 # Раскомментировать и ввести корректный путь до загруженных 
