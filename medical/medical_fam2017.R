@@ -4,11 +4,11 @@ library(dplyr)
 library(Hmisc)
 
 # Подгрузить функции ---------------------------------------------------
-source("~/git/ais/medical/medical_functions.R")
+source("~/git/ais/medical/medical_functions.R", encoding = "UTF-8")
 
 # Подгрузить дополнительные данные ------------------------------------------------
 data.arrivals <- get(load("~/data/data_fam_2017.rda"))
-camps <- read.csv2("~/data/camps.csv")
+camps <- read.csv2("~/data/camps.csv",  encoding = "UTF-8")
 
 # Названия колонок для заболеваний и травм -----------------------------
 dyscrasia <- c("infections_infestations", "endocrine", "nervous",
@@ -58,7 +58,7 @@ medical.data$region <- camps$region[match(medical.data$camp_name,
 medical.data$duration <- medical.data$date_out - medical.data$date_in + 1
 
 # Рассчитать доли групп отдыхающих -------------------------------------
-source("~/git/ais/medical/medical_percents_fam.R")
+source("~/git/ais/medical/medical_percents_fam.R", encoding = "UTF-8")
 
 # Присвоение атрибутов -------------------------------------------------
 source("~/git/ais/medical/medical_labels.R", encoding = "UTF-8")
