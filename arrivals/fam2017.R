@@ -11,7 +11,7 @@ source("~/git/ais/arrivals/arrivals_functions.R")
 
 # Дополнительные данные ------------------------------------------------
 # Данные из АИСО
-aiso.register <- get(load("~/data/aiso_vouchers_2017.rda"))
+aiso.register <- get(load("~/data/aiso_vouchers2017.rda"))
 source("~/git/ais/arrivals/beneficiaries.R")
 
 # Данные о лагерях
