@@ -4,17 +4,16 @@ library(dplyr)
 library(tidyr)
 
 # Функции --------------------------------------------------------------
-source("~/git/ais/arrivals/arrivals_functions.R")
+source("~/git/ais/arrivals/arrivals_functions.R", encoding = "UTF-8")
 
 # Дополнительные данные ------------------------------------------------
 # Данные из АИСО
-aiso.register <- get(load("~/data/aiso_vouchers_2017.rda"))
-source("~/git/ais/arrivals/beneficiaries.R")
+aiso.register <- get(load("~/data/aiso_vouchers2017.rda"))
+source("~/git/ais/arrivals/beneficiaries.R", encoding = "UTF-8")
 # Реестр отказов 
-denials.data <- read.csv2("~/data/denials_ind2017.csv", 
-                          encoding = "UTF-8")
+denials.data <- read.csv2("~/data/denials_ind2017.csv", encoding = "UTF-8")
 # Данные о лагерях
-camps <- read.csv2("~/data/camps.csv")
+camps <- read.csv2("~/data/camps.csv", encoding = "UTF-8")
 
 # Создание массива -----------------------------------------------------
 setwd("~/aism/2017/arrivals_ind")
