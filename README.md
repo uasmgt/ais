@@ -98,4 +98,8 @@
 например, `load("~/data/aiso2020_200629.rda")`. Для работы в Excel 
 нужно открыть сохранённый csv-файл. Названия столбцов можно подсмотреть в скрипте [`aiso_register`](https://github.com/uasmgt/ais/blob/master/aiso/aiso_labels.R).
 
+### Дальнейший анализ
+
+Примеры простейшего анализа с использованием библиотек `tidyr` и
+`dplyr` приведены в файле [`analysis_example`](https://github.com/uasmgt/ais/blob/master/aiso/analysis_example.R).
 
