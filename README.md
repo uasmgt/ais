@@ -134,3 +134,7 @@
 - [для совместного отдыха](https://ais.mosgortur.ru/AnalyticReport?ReportType=2E151C59-105D-47B0-98A2-0C45A08BFD8C);
 - [для индивидуального отдыха детей-сирот](https://ais.mosgortur.ru/AnalyticReport?ReportType=84A4C70B-C322-4586-8D14-CE9BD7F7B798);
 - [для совместного отдыха детей-сирот](https://ais.mosgortur.ru/AnalyticReport?ReportType=D90C7591-8DAA-4078-96E7-21114A32A2FB).
+
+Сверка с этими перечнями позволит, с одной стороны, не упустить ни 
+одного заезда, с другой --- не включить в массив лишние заезды.
+
