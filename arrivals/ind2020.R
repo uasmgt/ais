@@ -47,6 +47,7 @@ data.ind$date_out <- as.Date(data.ind$date_out, format = "%d.%m.%Y")
 
 # Добавление региона ---------------------------------------------------
 data.ind$region <- camps$region[match(data.ind$camp_name, camps$camp_name)]
+data.ind$camp_name <- camps$short_name[match(data.ind$camp_name, camps$camp_name)]
 
 # Сохранение массива ---------------------------------------------------
 unique(data.ind) -> ind2020
