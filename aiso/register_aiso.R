@@ -69,10 +69,8 @@ source("~/git/ais/aiso/aiso_labels.R", encoding = "UTF-8")
 # (расскомментировать соответствующие строки и задать правильные 
 # название для файлов)
 
-# aiso2020 <- aiso.register
-
 # Сохранение массива для анализа в R
-# save(aiso2020, file = "~/data/aiso2020_200320.rda")
+# save(aiso.register, file = "~/data/aiso2020_200320.rda")
 
 # Сохранение массива в формате csv для работы в MS Excel / LO Calc
-# write.csv2(aiso2020, file = "~/data/aiso2020_200320.csv", row.names = FALSE)
+# write.csv2(aiso.register, file = "~/data/aiso2020_200320.csv", row.names = FALSE)
