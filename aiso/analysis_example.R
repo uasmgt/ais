@@ -2,6 +2,7 @@
 load("~/data/aiso2020_200629.rda") # указать корректный путь до файла
 
 # Библиотеки -----------------------------------------------------------
+# install.packages(c("tidyr", "dplyr"))
 library(tidyr)
 library(dplyr)
 
