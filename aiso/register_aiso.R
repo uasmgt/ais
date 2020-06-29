@@ -6,7 +6,7 @@
 # ВАЖНО! Все файлы из папки с выгрузками должны быть закрыты!
 
 # Необходимые пакеты ---------------------------------------------------
-# install.packages("openxlsx")
+# install.packages(c("openxlsx", "lubridate", "dplyr"))
 library(openxlsx)
 library(lubridate)
 library(dplyr)
