@@ -7,7 +7,7 @@ dataset$non_department <- dataset$nonarrivals_dep /
 # Доли детей разных категорий от числа детей ---------------------------
 dataset$per_department      <- dataset$fact_dep        / dataset$fact_total
 dataset$per_disabled        <- dataset$disabled        / dataset$fact_total
-dataset$per_disorders       <- dataset$disorders       / dataset$fact_total
+dataset$per_disorders       <- dataset$disorders_total / dataset$fact_total
 dataset$per_mental          <- dataset$mental          / dataset$fact_total
 dataset$per_muscle_skeleton <- dataset$muscle_skeleton / dataset$fact_total
 dataset$per_dysfunction     <- dataset$dysfunction     / dataset$fact_total
