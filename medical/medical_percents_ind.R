@@ -1,4 +1,5 @@
 # Подгрузить данные о количестве отдыхающих
+medical.data$session <- data.arrivals$session
 medical.data$kids <- data.arrivals$fact_total
 medical.data$department <- data.arrivals$fact_dep
 medical.data$disabled <- data.arrivals$disabled

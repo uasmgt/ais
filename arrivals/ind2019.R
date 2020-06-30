@@ -13,7 +13,7 @@ source("~/git/ais/arrivals/beneficiaries.R", encoding = "UTF-8")
 # Реестр отказов 
 denials.data <- read.csv2("~/data/denials_ind2019.csv", encoding = "UTF-8")
 # Данные о лагерях
-camps <- read.csv2("~/data/camps.csv", encoding = "UTF-8")
+camps <- read.xlsx("~/data/camps.xlsx")
 
 # Создание массива -----------------------------------------------------
 setwd("~/aism/2019/arrivals_ind")
@@ -47,6 +47,11 @@ data.ind$date_out <- as.Date(data.ind$date_out, format = "%d.%m.%Y")
 
 # Добавление региона ---------------------------------------------------
 data.ind$region <- camps$region[match(data.ind$camp_name, camps$camp_name)]
+# Короткое название лагеря
+data.ind$camp_name <- camps$short_name[match(data.ind$camp_name, camps$camp_name)]
+
+# пояснение к названиям колонок
+source("~/git/ais/arrivals/arrivals_labels.R", encoding = "UTF-8")
 
 # Сохранение массива ---------------------------------------------------
 unique(data.ind) -> ind2019

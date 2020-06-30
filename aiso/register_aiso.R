@@ -63,6 +63,7 @@ aiso.register <- aiso.register %>%
          birthdate_camper = dmy(birthdate_camper),
          age_camper = year(app_date) - year(birthdate_camper))
 
+# пояснение к названиям колонок
 source("~/git/ais/aiso/aiso_labels.R", encoding = "UTF-8")
 
 # Сохранение результатов -----------------------------------------------

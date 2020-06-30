@@ -7,7 +7,7 @@ source("~/git/ais/medical/medical_functions.R", encoding = "UTF-8")
 
 # Подгрузить дополнительные данные ------------------------------------------------
 data.arrivals <- get(load("~/data/data_ind_2019.rda"))
-camps <- read.csv2("~/data/camps.csv", encoding = "UTF-8")
+camps <- read.xlsx("~/data/camps.xlsx")
 
 # Названия колонок для заболеваний и травм -----------------------------
 dyscrasia <- c("infections_infestations", "endocrine", "nervous",
@@ -52,6 +52,8 @@ medical.data$date_out <- as.Date(medical.data$date_out,
 # Задать расположение лагеря
 medical.data$region <- camps$region[match(medical.data$camp_name, 
                                           camps$camp_name)]
+medical.data$camp_name <- camps$short_name[match(medical.data$camp_name, camps$camp_name)]
+
 # Рассчитать продолжительность заезда
 medical.data$duration <- medical.data$date_out - medical.data$date_in + 1
 
