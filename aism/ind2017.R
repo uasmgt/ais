@@ -76,13 +76,11 @@ source("~/git/ais/aism/calc_ind.R", encoding = "UTF-8")
 source("~/git/ais/aism/labels_ind_old.R", encoding = "UTF-8")
 
 # Сохранение данных ----------------------------------------------------
-ind2017 <- dataset[c(1:22, 45, 46)]
-med.ind2017 <- dataset[c(1:6, 13, 16, 23:44)]
+# ind2017 <- dataset[c(1:22, 45, 46)]
+# med.ind2017 <- dataset[c(1:6, 13, 16, 23:44)]
+data.ind2017 <- dataset
 
 # для анализа в R
-save(ind2017, file = "~/data/arrivals_ind2017.rda")
-save(med.ind2017, file = "~/data/medical_ind2017.rda")
-
+save(data.ind2017, file = "~/data/data_ind2017.rda")
 # для анализа в Excel
-write.csv2(ind2017, file = "~/data/arrivals_ind2017.csv")
-write.csv2(med.ind2017, file = "~/data/medical_ind2017.csv")
+write.csv2(data.ind2017, file = "~/data/data_ind2017.csv")

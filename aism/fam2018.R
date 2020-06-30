@@ -76,13 +76,11 @@ dataset$trm_per_men <- dataset$trm_sum / dataset$visits_total
 source("~/git/ais/aism/labels_fam_old.R", encoding = "UTF-8")
 
 # Сохранение данных ----------------------------------------------------
-fam2018 <- dataset[c(1:3, 5:38)]
-med.fam2018 <- dataset[c(1:3, 5:6, 32, 39:63)]
+# fam2018 <- dataset[c(1:3, 5:38)]
+# med.fam2018 <- dataset[c(1:3, 5:6, 32, 39:63)]
+data.fam2018 <- dataset
 
 # для анализа в R
-save(fam2018, file = "~/data/arrivals_fam2018.rda")
-save(med.fam2018, file = "~/data/medical_fam2018.rda")
-
+save(data.fam2018, file = "~/data/data_fam2018.rda")
 # для анализа в Excel
-write.csv2(fam2018, file = "~/data/arrivals_fam2018.csv", row.names = FALSE)
-write.csv2(med.fam2018, file = "~/data/medical_fam2018.csv",  row.names = FALSE)
+write.csv2(data.fam2018, file = "~/data/data_fam2018.csv")
