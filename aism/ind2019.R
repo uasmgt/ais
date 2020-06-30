@@ -77,7 +77,7 @@ source("~/git/ais/aism/labels_ind.R", encoding = "UTF-8")
 
 # Сохранение данных ----------------------------------------------------
 ind2019 <- dataset[c(1:22, 45, 46)]
-med.ind2019 <- dataset[c(1:6, 16, 23:44)]
+med.ind2019 <- dataset[c(1:6, 13, 16, 23:44)]
 
 # для анализа в R
 save(ind2019, file = "~/data/arrivals_ind2019.rda")
