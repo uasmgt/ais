@@ -84,5 +84,5 @@ save(ind2019, file = "~/data/arrivals_ind2019.rda")
 save(med.ind2019, file = "~/data/medical_ind2019.rda")
 
 # для анализа в Excel
-write.xlsx(ind2019, file = "~/data/arrivals_ind2019.xlsx")
-write.xlsx(med.ind2019, file = "~/data/medical_ind2019.xlsx")
+write.csv2(ind2019, file = "~/data/arrivals_ind2019.csv")
+write.csv2(med.ind2019, file = "~/data/medical_ind2019.csv")
